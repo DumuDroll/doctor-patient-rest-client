@@ -1,0 +1,22 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Birth date</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone Number</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let fullInfo of fullInfos">
+        <td>{{ fullInfo.id }}</td>
+        <td>{{ fullInfo.birthDate }}</td>
+        <td>{{ fullInfo.email }}</td>
+        <td>{{ fullInfo.phoneNumber }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

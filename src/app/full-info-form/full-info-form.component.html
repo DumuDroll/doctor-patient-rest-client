@@ -1,0 +1,24 @@
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #fullInfoForm="ngForm">
+      <div class="form-group">
+        <label for="birthDate">Name</label>
+        <input type="text" [(ngModel)]="fullInfo.birthDate"
+               class="form-control"
+               id="birthDate"
+               name="birthDate"
+               placeholder="Enter your birth date">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" [(ngModel)]="fullInfo.email"
+               class="form-control"
+               id="email"
+               name="email"
+               placeholder="Enter your email address">
+      </div>
+      <button type="submit" [disabled]="!fullInfoForm.form.valid"
+              class="btn btn-info">Submit</button>
+    </form>
+  </div>
+</div>
