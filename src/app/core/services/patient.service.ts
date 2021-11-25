@@ -33,8 +33,8 @@ export class PatientService {
     return this.http.put(`${baseUrl}`, data);
   }
 
-  public delete(id: any): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`)
+  public deleteById(id: any): Observable<Patient[]> {
+    return this.http.delete<Patient[]>(`${baseUrl}/${id}`)
   }
 
 }

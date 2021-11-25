@@ -1,1 +1,6 @@
-<app-data-table-component [tableData]="patients" [columnHeader]="columnHeader" *ngIf="patients "></app-data-table-component>
+<app-data-table-component
+  [tableData]="patients"
+  [columnHeader]="columnHeader"
+  [dataService]="patientService"
+  (showEditDialog)="showPatientEditDialog($event)"
+  *ngIf="patients "></app-data-table-component>

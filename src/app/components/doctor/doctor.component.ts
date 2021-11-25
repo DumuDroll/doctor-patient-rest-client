@@ -12,9 +12,9 @@ import {DoctorService} from "../../core/services/doctor.service";
 export class DoctorComponent implements OnInit {
   doctors?: Doctor[];
 
-  columnHeader = {'id': 'id', 'name': 'Name', 'patient': 'Patient'}
+  columnHeader = {'id': 'id', 'name': 'Name', 'patient': 'Patient', 'modification': ''}
 
-  constructor(private doctorService: DoctorService) {
+  constructor(public doctorService: DoctorService) {
   }
 
   ngOnInit(): void {

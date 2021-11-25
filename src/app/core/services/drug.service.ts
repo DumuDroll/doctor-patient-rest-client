@@ -33,8 +33,8 @@ export class DrugService {
     return this.http.put<Drug>(`${baseUrl}`, data);
   }
 
-  public delete(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`)
+  public deleteById(id: number): Observable<Drug[]> {
+    return this.http.delete<Drug[]>(`${baseUrl}/${id}`)
   }
 
 }

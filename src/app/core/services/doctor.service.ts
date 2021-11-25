@@ -29,8 +29,8 @@ export class DoctorService {
     return this.http.put<Doctor>(`${baseUrl}`, data);
   }
 
-  public delete(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`)
+  public deleteById(id: number): Observable<Doctor[]> {
+    return this.http.delete<Doctor[]>(`${baseUrl}/${id}`)
   }
 
 }

@@ -10,9 +10,10 @@ import {FullInfoService} from "../../core/services/full-info.service";
 export class FullInfoComponent implements OnInit {
 
   fullInfos?: FullInfo[];
-  columnHeader = {'id': 'id', 'birthDate': 'Birth date', 'email': 'Email', 'phoneNumber': 'Phone number'}
+  columnHeader = {'id': 'id', 'birthDate': 'Birth date', 'email': 'Email', 'phoneNumber': 'Phone number'
+    , 'modification': ''}
 
-  constructor(private fullInfoService: FullInfoService) {
+  constructor(public fullInfoService: FullInfoService) {
   }
 
   ngOnInit(): void {

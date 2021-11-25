@@ -29,8 +29,8 @@ export class FullInfoService {
     return this.http.put(`${baseUrl}`, data);
   }
 
-  public delete(id: any): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`)
+  public deleteById(id: any): Observable<FullInfo[]> {
+    return this.http.delete<FullInfo[]>(`${baseUrl}/${id}`)
   }
 
 }

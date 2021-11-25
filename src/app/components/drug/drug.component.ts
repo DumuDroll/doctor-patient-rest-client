@@ -11,9 +11,9 @@ import {DrugService} from "../../core/services/drug.service";
 })
 export class DrugComponent implements OnInit {
   drugs?: Drug[];
-  columnHeader = {'id': 'id', 'name': 'Name', 'patient': 'Patient'}
+  columnHeader = {'id': 'id', 'name': 'Name', 'patient': 'Patient', 'modification': ''}
 
-  constructor(private drugService: DrugService) {
+  constructor(public drugService: DrugService) {
   }
 
   ngOnInit(): void {

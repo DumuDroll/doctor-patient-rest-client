@@ -19,6 +19,9 @@ import {FullInfoComponent} from './components/full-info/full-info.component';
 import {DrugService} from "./core/services/drug.service";
 import {DoctorService} from "./core/services/doctor.service";
 import {PatientService} from "./core/services/patient.service";
+import {AddPatientDialog} from "./components/patient/add-new-dialog/addPatientDialog";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import {PatientService} from "./core/services/patient.service";
     DoctorComponent,
     PatientComponent,
     DataTableComponentComponent,
-    FullInfoComponent
+    FullInfoComponent,
+    AddPatientDialog
   ],
   imports: [
     MatSidenavModule,
@@ -39,7 +43,9 @@ import {PatientService} from "./core/services/patient.service";
     MatListModule,
     MatIconModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule
   ],
   providers: [FullInfoService, DrugService, DoctorService, PatientService],
   bootstrap: [AppComponent]
