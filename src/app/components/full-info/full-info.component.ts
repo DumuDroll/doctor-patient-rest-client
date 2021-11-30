@@ -17,6 +17,10 @@ export class FullInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.findAll();
+  }
+
+  findAll() {
     this.fullInfoService.findAll()
       .subscribe(data => {
         this.fullInfos = data;

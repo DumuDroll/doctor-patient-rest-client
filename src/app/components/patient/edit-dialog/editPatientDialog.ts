@@ -2,23 +2,27 @@ import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Patient} from "../../../core/models/patient";
 import {FullInfo} from "../../../core/models/full-info";
+import {Doctor} from "../../../core/models/doctor";
+import {Drug} from "../../../core/models/drug";
 
 class DialogData {
   id?: number;
   firstName?: string;
   lastName?: string;
-  fullInfo: FullInfo = new FullInfo();
+  fullInfo?: FullInfo;
+  doctor?: Doctor;
+  drugs?: Drug[];
 }
 
 @Component({
-  selector: 'add-patient-dialog',
-  templateUrl: 'addPatientDialog.html',
+  selector: 'edit-patient-dialog',
+  templateUrl: 'editPatientDialog.html',
 })
-export class AddPatientDialog {
+export class EditPatientDialog {
   patient?: Patient;
 
   constructor(
-    public dialogRef: MatDialogRef<AddPatientDialog>,
+    public dialogRef: MatDialogRef<EditPatientDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 

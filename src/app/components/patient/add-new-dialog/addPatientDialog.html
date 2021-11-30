@@ -1,15 +1,28 @@
-<h1 mat-dialog-title>Edit patient info</h1>
+<h1 mat-dialog-title>Add new patient</h1>
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>First Name</mat-label>
-    <input matInput [(ngModel)]="data">
+    <input matInput [(ngModel)]="data.firstName">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>First Name</mat-label>
-    <input matInput [(ngModel)]="data.lastName">
+    <mat-label>Last Name</mat-label>
+    <input matInput  [(ngModel)]="data.lastName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput  [(ngModel)]="data.fullInfo.email">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Date of birth</mat-label>
+    <input matInput [(ngModel)]="data.fullInfo.birthDate">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Phone Number</mat-label>
+    <input matInput [(ngModel)]="data.fullInfo.phoneNumber">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
   <button mat-button [mat-dialog-close]="data">Save</button>
 </div>

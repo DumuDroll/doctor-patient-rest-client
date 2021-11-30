@@ -19,9 +19,14 @@ import {FullInfoComponent} from './components/full-info/full-info.component';
 import {DrugService} from "./core/services/drug.service";
 import {DoctorService} from "./core/services/doctor.service";
 import {PatientService} from "./core/services/patient.service";
-import {AddPatientDialog} from "./components/patient/add-new-dialog/addPatientDialog";
+import {EditPatientDialog} from "./components/patient/edit-dialog/editPatientDialog";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
+import {AddPatientDialog} from "./components/patient/add-new-dialog/addPatientDialog";
+import {AddDoctorDialog} from "./components/doctor/add-new-dialog/addDoctorDialog";
+import {EditDoctorDialog} from "./components/doctor/edit-doctor-dialog/editDoctorDialog";
+import {EditDrugDialog} from "./components/drug/edit-new-dialog/editDrugDialog";
+import {AddDrugDialog} from "./components/drug/add-new-dialog/addDrugDialog";
 
 @NgModule({
   declarations: [
@@ -31,14 +36,19 @@ import {MatInputModule} from "@angular/material/input";
     PatientComponent,
     DataTableComponentComponent,
     FullInfoComponent,
-    AddPatientDialog
+    EditPatientDialog,
+    AddPatientDialog,
+    EditDoctorDialog,
+    AddDoctorDialog,
+    EditDrugDialog,
+    AddDrugDialog
   ],
   imports: [
+    FormsModule,
     MatSidenavModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
     BrowserAnimationsModule,
     MatListModule,
     MatIconModule,

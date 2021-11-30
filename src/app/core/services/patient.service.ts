@@ -30,6 +30,7 @@ export class PatientService {
   }
 
   public update(data: any): Observable<any> {
+    console.log("put");
     return this.http.put(`${baseUrl}`, data);
   }
 
