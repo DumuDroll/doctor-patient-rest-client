@@ -22,8 +22,8 @@ export class PatientComponent implements OnInit {
   drugs?: Drug[];
   patientEntityName = 'patient';
   columnHeader = {
-    'id': 'id', 'firstName': 'First name', 'lastName': 'Last name', 'fullInfo': 'Full info',
-    'doctor': 'Doctor', 'modification': ''
+    'id': 'id', 'firstName': 'First name', 'lastName': 'Last name', 'email': 'Full info',
+    'doctorName': 'Doctor', 'drugsNames': 'Drugs', 'modification': ''
   }
 
   constructor(public dialog: MatDialog,

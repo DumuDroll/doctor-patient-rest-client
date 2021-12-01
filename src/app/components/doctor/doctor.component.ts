@@ -12,7 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
 export class DoctorComponent implements OnInit {
   doctors?: Doctor[];
 
-  columnHeader = {'id': 'id', 'name': 'Name', 'experience': 'Experience', 'modification': ''}
+  columnHeader = {'id': 'id', 'name': 'Name', 'experience': 'Experience', 'patientsNames': "Patients",'modification': ''}
 
   constructor(public dialog: MatDialog, public doctorService: DoctorService) {
   }
