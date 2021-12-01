@@ -17,6 +17,11 @@
         <button mat-icon-button color="accent" (click)="delete(element)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
+
+        <button *ngIf="parentEntity=='patient'" mat-icon-button color="accent"
+                (click)="showAddDoctorToPatientDialog.emit(element)" style="margin-left: 90%">
+          <mat-icon>add_box</mat-icon>
+        </button>
       </td>
     </ng-container>
   </ng-container>

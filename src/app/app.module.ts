@@ -27,6 +27,8 @@ import {AddDoctorDialog} from "./components/doctor/add-new-dialog/addDoctorDialo
 import {EditDoctorDialog} from "./components/doctor/edit-doctor-dialog/editDoctorDialog";
 import {EditDrugDialog} from "./components/drug/edit-new-dialog/editDrugDialog";
 import {AddDrugDialog} from "./components/drug/add-new-dialog/addDrugDialog";
+import { AddDoctorToPatientDialogComponent } from './components/patient/add-doctor-to-patient-dialog/add-doctor-to-patient-dialog.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import {AddDrugDialog} from "./components/drug/add-new-dialog/addDrugDialog";
     EditDoctorDialog,
     AddDoctorDialog,
     EditDrugDialog,
-    AddDrugDialog
+    AddDrugDialog,
+    AddDoctorToPatientDialogComponent
   ],
   imports: [
     FormsModule,
@@ -55,7 +58,8 @@ import {AddDrugDialog} from "./components/drug/add-new-dialog/addDrugDialog";
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [FullInfoService, DrugService, DoctorService, PatientService],
   bootstrap: [AppComponent]

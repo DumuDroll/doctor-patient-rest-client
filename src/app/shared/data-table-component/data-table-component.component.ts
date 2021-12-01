@@ -11,9 +11,11 @@ import {MatTableDataSource} from "@angular/material/table";
 export class DataTableComponentComponent implements OnInit, OnChanges {
   @Output() showAddDialog: EventEmitter<any> = new EventEmitter();
   @Output() showEditDialog: EventEmitter<any> = new EventEmitter();
+  @Output() showAddDoctorToPatientDialog: EventEmitter<any> = new EventEmitter();
   @Input() dataService?: any;
   @Input() tableData: any[] | undefined;
   @Input() columnHeader: any;
+  @Input() parentEntity?: string;
   objectKeys = Object.keys;
   dataSource: any | undefined;
 
@@ -23,7 +25,6 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.dataSource = new MatTableDataSource(this.tableData);
-    console.log("newData", this.tableData)
   }
 
 

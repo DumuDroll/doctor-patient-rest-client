@@ -2,6 +2,8 @@
   [tableData]="patients"
   [columnHeader]="columnHeader"
   [dataService]="patientService"
+  [parentEntity]="patientEntityName"
   (showEditDialog)="showPatientEditDialog($event)"
   (showAddDialog)="showPatientAddDialog()"
+  (showAddDoctorToPatientDialog)="showAddDoctorToPatientDialog($event)"
   *ngIf="patients "></app-data-table-component>
