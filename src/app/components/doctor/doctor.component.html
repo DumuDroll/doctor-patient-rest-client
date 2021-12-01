@@ -2,6 +2,5 @@
   [tableData]="doctors"
   [columnHeader]="columnHeader"
   [dataService]="doctorService"
-  (showAddDialog)="showDoctorAddDialog()"
-  (showEditDialog)="showDoctorEditDialog($event)"
+  (showModificationDialog)="showDoctorDialog($event)"
   *ngIf="doctors"></app-data-table-component>

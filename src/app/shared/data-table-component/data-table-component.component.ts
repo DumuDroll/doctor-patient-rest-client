@@ -9,9 +9,7 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrls: ['./data-table-component.component.css']
 })
 export class DataTableComponentComponent implements OnInit, OnChanges {
-  @Output() showAddDialog: EventEmitter<any> = new EventEmitter();
-  @Output() showEditDialog: EventEmitter<any> = new EventEmitter();
-  @Output() showAddDoctorToPatientDialog: EventEmitter<any> = new EventEmitter();
+  @Output() showModificationDialog: EventEmitter<any> = new EventEmitter();
   @Input() dataService?: any;
   @Input() tableData: any[] | undefined;
   @Input() columnHeader: any;
@@ -25,18 +23,13 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.dataSource = new MatTableDataSource(this.tableData);
-  }
-
-
-  detectChanges(newData: any){
-    this.dataSource = new MatTableDataSource(newData);
+    console.log("tdata ", this.tableData);
   }
 
   delete(element: any) {
     this.dataService.deleteById(element.id).subscribe((data: any[] | undefined) => {
       this.dataSource = new MatTableDataSource(data);
     });
-    console.log("deleted", element.id)
   }
 
 }

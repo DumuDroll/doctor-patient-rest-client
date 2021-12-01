@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Doctor} from "../../core/models/doctor";
 import {DoctorService} from "../../core/services/doctor.service";
-import {AddDoctorDialog} from "./add-new-dialog/addDoctorDialog";
-import {EditDoctorDialog} from "./edit-doctor-dialog/editDoctorDialog";
+import {DoctorDialog} from "./add-new-dialog/doctor-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -22,28 +21,20 @@ export class DoctorComponent implements OnInit {
     this.findAll()
   }
 
-  showDoctorAddDialog(element?: any): void {
-    const dialogRef = this.dialog.open(AddDoctorDialog, {
+  showDoctorDialog(element?: any): void {
+    const dialogRef = this.dialog.open(DoctorDialog, {
       width: '250px',
       data: {id: element?.id, name: element?.name, experience: element?.experience}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=null){
-        this.doctorService.create(result)
-          .subscribe(() => this.findAll());
-      }
-    });
-  }
-
-  showDoctorEditDialog(element?: any): void {
-    const dialogRef = this.dialog.open(EditDoctorDialog, {
-      width: '250px',
-      data: {id: element?.id, name: element?.name, experience: element?.experience}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result!=null){
-        this.doctorService.update(result)
-          .subscribe(() => this.findAll());
+        if(element==null){
+          this.doctorService.create(result)
+            .subscribe(() => this.findAll());
+        }else{
+          this.doctorService.update(result)
+            .subscribe(() => this.findAll());
+        }
       }
     });
   }

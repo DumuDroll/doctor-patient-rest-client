@@ -9,24 +9,34 @@ class DialogData {
   id?: number;
   firstName?: string;
   lastName?: string;
-  fullInfo?: FullInfo;
+  fullInfo: FullInfo = new FullInfo();
   doctor?: Doctor;
+  doctors?: Doctor[];
   drugs?: Drug[];
+  allDrugs?: Drug[];
 }
 
 @Component({
-  selector: 'edit-patient-dialog',
-  templateUrl: 'editPatientDialog.html',
+  selector: 'add-patient-dialog',
+  templateUrl: 'patient-dialog.component.html',
 })
-export class EditPatientDialog {
+export class PatientDialog {
   patient?: Patient;
 
   constructor(
-    public dialogRef: MatDialogRef<EditPatientDialog>,
+    public dialogRef: MatDialogRef<PatientDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 
   onCancelClick(): void {
     this.dialogRef.close();
+  }
+
+  onDoctorChange(element?: any){
+    this.data.doctor=element;
+  }
+
+  onDrugsChange(element?: any){
+    this.data.drugs=element;
   }
 }

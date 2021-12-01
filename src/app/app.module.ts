@@ -19,15 +19,11 @@ import {FullInfoComponent} from './components/full-info/full-info.component';
 import {DrugService} from "./core/services/drug.service";
 import {DoctorService} from "./core/services/doctor.service";
 import {PatientService} from "./core/services/patient.service";
-import {EditPatientDialog} from "./components/patient/edit-dialog/editPatientDialog";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
-import {AddPatientDialog} from "./components/patient/add-new-dialog/addPatientDialog";
-import {AddDoctorDialog} from "./components/doctor/add-new-dialog/addDoctorDialog";
-import {EditDoctorDialog} from "./components/doctor/edit-doctor-dialog/editDoctorDialog";
-import {EditDrugDialog} from "./components/drug/edit-new-dialog/editDrugDialog";
-import {AddDrugDialog} from "./components/drug/add-new-dialog/addDrugDialog";
-import { AddDoctorToPatientDialogComponent } from './components/patient/add-doctor-to-patient-dialog/add-doctor-to-patient-dialog.component';
+import {PatientDialog} from "./components/patient/add-new-dialog/patient-dialog.component";
+import {DoctorDialog} from "./components/doctor/add-new-dialog/doctor-dialog.component";
+import {DrugDialog} from "./components/drug/add-new-dialog/drug-dialog.component";
 import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
@@ -38,13 +34,9 @@ import {MatSelectModule} from "@angular/material/select";
     PatientComponent,
     DataTableComponentComponent,
     FullInfoComponent,
-    EditPatientDialog,
-    AddPatientDialog,
-    EditDoctorDialog,
-    AddDoctorDialog,
-    EditDrugDialog,
-    AddDrugDialog,
-    AddDoctorToPatientDialogComponent
+    PatientDialog,
+    DoctorDialog,
+    DrugDialog,
   ],
   imports: [
     FormsModule,

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Drug} from "../../core/models/drug";
 import {DrugService} from "../../core/services/drug.service";
 import {MatDialog} from "@angular/material/dialog";
-import {AddDrugDialog} from "./add-new-dialog/addDrugDialog";
-import {EditDrugDialog} from "./edit-new-dialog/editDrugDialog";
+import {DrugDialog} from "./add-new-dialog/drug-dialog.component";
 
 @Component({
   selector: 'app-drug',
@@ -21,28 +20,20 @@ export class DrugComponent implements OnInit {
     this.findAll()
   }
 
-  showDrugAddDialog(element?: any): void {
-    const dialogRef = this.dialog.open(AddDrugDialog, {
+  showDrugDialog(element?: any): void {
+    const dialogRef = this.dialog.open(DrugDialog, {
       width: '250px',
       data: {id: element?.id, name: element?.name}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=null){
-        this.drugService.create(result)
-          .subscribe(() => this.findAll());
-      }
-    });
-  }
-
-  showDrugEditDialog(element?: any): void {
-    const dialogRef = this.dialog.open(EditDrugDialog, {
-      width: '250px',
-      data: {id: element?.id, name: element?.name}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result!=null){
-        this.drugService.update(result)
-          .subscribe(() => this.findAll());
+        if(element==null) {
+          this.drugService.create(result)
+            .subscribe(() => this.findAll());
+        }else{
+          this.drugService.update(result)
+            .subscribe(() => this.findAll());
+        }
       }
     });
   }

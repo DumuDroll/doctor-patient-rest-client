@@ -9,14 +9,14 @@ class DialogData {
 }
 
 @Component({
-  selector: 'edit-doctor-dialog',
-  templateUrl: 'editDoctorDialog.html',
+  selector: 'add-doctor-dialog',
+  templateUrl: 'doctor-dialog.component.html',
 })
-export class EditDoctorDialog {
+export class DoctorDialog {
   doctor?: Doctor;
 
   constructor(
-    public dialogRef: MatDialogRef<EditDoctorDialog>,
+    public dialogRef: MatDialogRef<DoctorDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 

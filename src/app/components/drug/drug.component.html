@@ -2,6 +2,5 @@
   [tableData]="drugs"
   [columnHeader]="columnHeader"
   [dataService]="drugService"
-  (showEditDialog)="showDrugEditDialog($event)"
-  (showAddDialog)="showDrugAddDialog()"
+  (showModificationDialog)="showDrugDialog($event)"
   *ngIf="drugs "></app-data-table-component>

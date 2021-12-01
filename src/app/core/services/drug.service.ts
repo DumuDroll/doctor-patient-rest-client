@@ -25,7 +25,7 @@ export class DrugService {
     return this.http.post<Drug>(baseUrl, patient);
   }
 
-  public addDoctorToPatient(patientId:number, drug: Drug){
+  public addDrugToPatient(patientId:number, drug: Drug){
     return this.http.patch<Drug>(`${baseUrl}/${patientId}`, drug)
   }
 

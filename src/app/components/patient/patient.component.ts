@@ -2,12 +2,12 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Patient} from "../../core/models/patient";
 import {PatientService} from "../../core/services/patient.service";
 import {MatDialog} from "@angular/material/dialog";
-import {EditPatientDialog} from "./edit-dialog/editPatientDialog";
-import {AddPatientDialog} from "./add-new-dialog/addPatientDialog";
+import {PatientDialog} from "./add-new-dialog/patient-dialog.component";
 import {FullInfo} from "../../core/models/full-info";
-import {AddDoctorToPatientDialogComponent} from "./add-doctor-to-patient-dialog/add-doctor-to-patient-dialog.component";
 import {Doctor} from "../../core/models/doctor";
 import {DoctorService} from "../../core/services/doctor.service";
+import {DrugService} from "../../core/services/drug.service";
+import {Drug} from "../../core/models/drug";
 
 @Component({
   selector: 'app-patient',
@@ -19,68 +19,60 @@ export class PatientComponent implements OnInit {
   patients?: Patient[];
   patient?: Patient;
   doctors?: Doctor[];
-  patientEntityName='patient';
+  drugs?: Drug[];
+  patientEntityName = 'patient';
   columnHeader = {
     'id': 'id', 'firstName': 'First name', 'lastName': 'Last name', 'fullInfo': 'Full info',
     'doctor': 'Doctor', 'modification': ''
   }
 
-  constructor(public dialog: MatDialog, public patientService: PatientService, public doctorService: DoctorService) {
+  constructor(public dialog: MatDialog,
+              public patientService: PatientService,
+              public doctorService: DoctorService,
+              public drugService: DrugService) {
   }
 
   ngOnInit(): void {
     this.doctorService.findAll().subscribe(data => {
       console.log("doctors ", data);
-      this.doctors=data});
+      this.doctors = data
+    })
+    this.drugService.findAll().subscribe(data => {
+      this.drugs = data
+    })
     this.findAll()
   }
 
-  showPatientAddDialog(element?: any): void {
-    const dialogRef = this.dialog.open(AddPatientDialog, {
+  showPatientDialog(element?: any): void {
+    let fullInfo = element?.fullInfo;
+    if (fullInfo == null) {
+      fullInfo = new FullInfo();
+    }
+    const dialogRef = this.dialog.open(PatientDialog, {
       width: '250px',
       data: {
         id: element?.id, firstName: element?.firstName, lastName: element?.lastName,
-        fullInfo: new FullInfo(), doctor: element?.doctor, drugs: element?.drugs
+        fullInfo: fullInfo, doctor: element?.doctor, drugs: element?.drugs, doctors: this.doctors, allDrugs: this.drugs
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        this.patientService.create(result)
-          .subscribe(() => this.findAll());
-      }
-    });
-  }
-
-  showPatientEditDialog(element?: any): void {
-    const dialogRef = this.dialog.open(EditPatientDialog, {
-      width: '250px',
-      data: {
-        id: element?.id, firstName: element?.firstName, lastName: element?.lastName,
-        fullInfo: element?.fullInfo, doctor: element?.doctor, drugs: element?.drugs
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        this.patientService.update(result)
-          .subscribe(() => this.findAll());
-      }
-    });
-  }
-
-  showAddDoctorToPatientDialog(element?: any): void {
-    console.log("doctors3 ", this.doctors);
-    const dialogRef = this.dialog.open(AddDoctorToPatientDialogComponent, {
-      width: '250px',
-      data: {
-        id: element?.id, firstName: element?.firstName, lastName: element?.lastName,
-        fullInfo: element?.fullInfo, doctor: element?.doctor, doctors: this.doctors
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        console.log("addResult", result);
-        this.patientService.addDoctorToPatient(result.selected, result)
-          .subscribe(() => this.findAll());
+        if (element == null) {
+          this.patientService.create(result)
+            .subscribe(() => this.findAll());
+          this.patientService.addDoctorToPatient(result.doctor.id, result)
+            .subscribe(() => this.findAll());
+          if (result.drugs != null) {
+            result.drugs.forEach((drug: Drug) => {
+              console.log("result", result);
+              this.drugService.addDrugToPatient(result.id, drug)
+                .subscribe(() => this.findAll());
+            })
+          }
+        } else {
+          this.patientService.update(result)
+            .subscribe(() => this.findAll());
+        }
       }
     });
   }
