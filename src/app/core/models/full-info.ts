@@ -1,7 +1,7 @@
 export class FullInfo {
 
    id?: number;
-   birthDate?: string;
+   birthDate?: Date;
    email?: string;
    phoneNumber?: string;
 

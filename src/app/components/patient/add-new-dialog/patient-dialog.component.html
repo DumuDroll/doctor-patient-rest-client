@@ -1,44 +1,51 @@
 <div mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>First Name</mat-label>
-    <input matInput [(ngModel)]="data.firstName">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Last Name</mat-label>
-    <input matInput  [(ngModel)]="data.lastName">
-  </mat-form-field>
+  <form [formGroup]="patientForm" (submit)="submit()">
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName">
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Email</mat-label>
-    <input matInput  [(ngModel)]="data.fullInfo.email">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Date of birth</mat-label>
-    <input matInput [(ngModel)]="data.fullInfo.birthDate">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Phone Number</mat-label>
-    <input matInput [(ngModel)]="data.fullInfo.phoneNumber">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Choose doctor</mat-label>
-    <mat-select [value]="data.doctor" (selectionChange)="onDoctorChange($event.value)">
-      <mat-option *ngFor="let doctor of data.doctors" [value]="doctor">
-        {{doctor.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Choose drugs</mat-label>
-    <mat-select multiple [value]="data.drugs" (selectionChange)="onDrugsChange($event.value)">
-      <mat-option *ngFor="let drug of data.allDrugs" [value]="drug">
-        {{drug.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Date of birth</mat-label>
+      <input matInput formControlName="birthDate" [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phoneNumber">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Choose doctor</mat-label>
+      <mat-select [value]="data.doctor" [compareWith]="compareObjects" (selectionChange)="onDoctorChange($event.value)">
+        <mat-option [value]=null>No doctor</mat-option>
+        <mat-option *ngFor="let doctor of data.doctors" [value]="doctor">
+          {{doctor.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Choose drugs</mat-label>
+      <mat-select multiple [compareWith]="compareObjects" [(value)]="data.drugs"
+                  (selectionChange)="onDrugsChange($event.value)">
+        <mat-option [value]="null">Clear all</mat-option>
+        <mat-option *ngFor="let drug of data.allDrugs" [value]="drug">
+          {{drug.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onCancelClick()">Cancel</button>
+      <button mat-button type="submit" [disabled]="this.patientForm.invalid" [mat-dialog-close]="data">Save</button>
+    </div>
+  </form>
 </div>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="onCancelClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data">Save</button>
-</div>

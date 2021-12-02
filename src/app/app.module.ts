@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {FullInfoService} from './core/services/full-info.service';
@@ -25,6 +25,10 @@ import {PatientDialog} from "./components/patient/add-new-dialog/patient-dialog.
 import {DoctorDialog} from "./components/doctor/add-new-dialog/doctor-dialog.component";
 import {DrugDialog} from "./components/drug/add-new-dialog/drug-dialog.component";
 import {MatSelectModule} from "@angular/material/select";
+import {FullInfoDialog, MY_FORMATS} from "./components/full-info/modify-dialog/full-info-dialog.component";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {MAT_DATE_FORMATS,DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -34,11 +38,13 @@ import {MatSelectModule} from "@angular/material/select";
     PatientComponent,
     DataTableComponentComponent,
     FullInfoComponent,
+    FullInfoDialog,
     PatientDialog,
     DoctorDialog,
-    DrugDialog,
+    DrugDialog
   ],
   imports: [
+    ReactiveFormsModule,
     FormsModule,
     MatSidenavModule,
     BrowserModule,
@@ -51,9 +57,14 @@ import {MatSelectModule} from "@angular/material/select";
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule
   ],
-  providers: [FullInfoService, DrugService, DoctorService, PatientService],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    FullInfoService, DrugService, DoctorService, PatientService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

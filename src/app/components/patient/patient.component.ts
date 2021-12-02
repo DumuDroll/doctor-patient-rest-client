@@ -34,7 +34,6 @@ export class PatientComponent implements OnInit {
 
   ngOnInit(): void {
     this.doctorService.findAll().subscribe(data => {
-      console.log("doctors ", data);
       this.doctors = data
     })
     this.drugService.findAll().subscribe(data => {
@@ -49,7 +48,7 @@ export class PatientComponent implements OnInit {
       fullInfo = new FullInfo();
     }
     const dialogRef = this.dialog.open(PatientDialog, {
-      width: '250px',
+      width: '300px',
       data: {
         id: element?.id, firstName: element?.firstName, lastName: element?.lastName,
         fullInfo: fullInfo, doctor: element?.doctor, drugs: element?.drugs, doctors: this.doctors, allDrugs: this.drugs
@@ -60,11 +59,12 @@ export class PatientComponent implements OnInit {
         if (element == null) {
           this.patientService.create(result)
             .subscribe(() => this.findAll());
-          this.patientService.addDoctorToPatient(result.doctor.id, result)
-            .subscribe(() => this.findAll());
+          if(result.doctor!=null){
+            this.patientService.addDoctorToPatient(result.doctor.id, result)
+              .subscribe(() => this.findAll());
+          }
           if (result.drugs != null) {
             result.drugs.forEach((drug: Drug) => {
-              console.log("result", result);
               this.drugService.addDrugToPatient(result.id, drug)
                 .subscribe(() => this.findAll());
             })
