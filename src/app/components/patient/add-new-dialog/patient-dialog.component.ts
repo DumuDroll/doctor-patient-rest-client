@@ -53,10 +53,16 @@ export class PatientDialog implements OnInit {
   toggleAllSelection() {
     this.allSelected = !this.allSelected;
     if (this.allSelected) {
-      this.drugsSelect.options.forEach((item: MatOption) => item.select());
+      this.drugsSelect.options.forEach((item: MatOption) => {
+        if(item.value!=null){
+          item.select();
+        }else {
+          item.deselect();
+        }
+      });
     } else {
       this.drugsSelect.options.forEach((item: MatOption) => {
-        item.deselect()
+        item.deselect();
       });
     }
     this.drugsSelect.close();
