@@ -34,16 +34,16 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Choose drugs</mat-label>
-      <mat-select multiple [compareWith]="compareObjects" [(value)]="data.drugs"
+      <mat-select #drugsSelect multiple [compareWith]="compareObjects" [(value)]="data.drugs"
                   (selectionChange)="onDrugsChange($event.value)">
-        <mat-option [value]="null">Clear all</mat-option>
+        <mat-option (click)="toggleAllSelection()" [value]="null">Select all</mat-option>
         <mat-option *ngFor="let drug of data.allDrugs" [value]="drug">
           {{drug.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <div mat-dialog-actions>
-      <button mat-button (click)="onCancelClick()">Cancel</button>
+      <button mat-button [mat-dialog-close]="true" (click)="onCancelClick()">Cancel</button>
       <button mat-button type="submit" [disabled]="this.patientForm.invalid" [mat-dialog-close]="data">Save</button>
     </div>
   </form>

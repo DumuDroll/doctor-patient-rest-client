@@ -1,10 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Patient} from "../../../core/models/patient";
 import {FullInfo} from "../../../core/models/full-info";
 import {Doctor} from "../../../core/models/doctor";
 import {Drug} from "../../../core/models/drug";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {DateService} from "../../../core/services/date.service";
+import * as moment from 'moment';
+import {MatSelect} from "@angular/material/select";
+import {MatOption} from "@angular/material/core";
 
 class DialogData {
   id?: number;
@@ -21,15 +25,18 @@ class DialogData {
 @Component({
   selector: 'add-patient-dialog',
   templateUrl: 'patient-dialog.component.html',
+  styleUrls: ['./patient-dialog.component.css']
 })
 export class PatientDialog implements OnInit {
-  dateRegex = "";
   patient?: Patient;
   patientForm!: FormGroup;
+  allSelected = false;
+  @ViewChild('drugsSelect') drugsSelect!: MatSelect;
 
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<PatientDialog>,
+    private dateService: DateService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 
@@ -38,9 +45,21 @@ export class PatientDialog implements OnInit {
       firstName: [this.data.firstName, Validators.required],
       lastName: [this.data.lastName, Validators.required],
       email: [this.data.fullInfo.email, [Validators.required, Validators.email]],
-      birthDate: [this.data.fullInfo.birthDate],
+      birthDate: [moment(this.data.fullInfo.birthDate, "dd/MM/yyyy").toDate()],
       phoneNumber: [this.data.fullInfo.phoneNumber]
     });
+  }
+
+  toggleAllSelection() {
+    this.allSelected = !this.allSelected;
+    if (this.allSelected) {
+      this.drugsSelect.options.forEach((item: MatOption) => item.select());
+    } else {
+      this.drugsSelect.options.forEach((item: MatOption) => {
+        item.deselect()
+      });
+    }
+    this.drugsSelect.close();
   }
 
   onCancelClick(): void {
@@ -65,14 +84,8 @@ export class PatientDialog implements OnInit {
   submit() {
     this.data.firstName = this.patientForm.value.firstName;
     this.data.lastName = this.patientForm.value.lastName;
-    if (this.patientForm.value.email != null) {
-      this.data.fullInfo.email = this.patientForm.value.email;
-    }
-    if (this.patientForm.value.birthDate != null) {
-      this.data.fullInfo.birthDate = this.patientForm.value.birthDate;
-    }
-    if (this.patientForm.value.phoneNumber != null) {
-      this.data.fullInfo.phoneNumber = this.patientForm.value.phoneNumber;
-    }
+    this.data.fullInfo.email = this.patientForm.value.email;
+    this.data.fullInfo.birthDate = this.dateService.transform(this.patientForm.value.birthDate);
+    this.data.fullInfo.phoneNumber = this.patientForm.value.phoneNumber;
   }
 }

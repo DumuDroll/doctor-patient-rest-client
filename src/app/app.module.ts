@@ -28,7 +28,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {FullInfoDialog, MY_FORMATS} from "./components/full-info/modify-dialog/full-info-dialog.component";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
-import {MAT_DATE_FORMATS,DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
+import {DatePipe} from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import {MAT_DATE_FORMATS,DateAdapter, MAT_DATE_LOCALE} from '@angular/material/c
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-    FullInfoService, DrugService, DoctorService, PatientService
+    FullInfoService, DrugService, DoctorService, PatientService, DatePipe
   ],
   bootstrap: [AppComponent]
 })
