@@ -30,6 +30,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
 import {DatePipe} from '@angular/common'
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {DatePipe} from '@angular/common'
     MatDialogModule,
     MatInputModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatPaginatorModule
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

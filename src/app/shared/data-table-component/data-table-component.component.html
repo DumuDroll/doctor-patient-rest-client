@@ -1,11 +1,17 @@
+<div>
+<mat-form-field style="margin-left: 40%">
+  <input #filter matInput type="text" (keyup)="applyFilter(filter.value)" placeholder="Filter">
+</mat-form-field>
 <button *ngIf="!checkIfFullInfo()" mat-icon-button color="accent" (click)="showModificationDialog.emit()" style="margin-left: 85%">
  Add new <mat-icon>add_box</mat-icon>
 </button>
+</div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(columnHeader)">
     <ng-container *ngIf="tableData!='modification'">
       <th scope="col" mat-header-cell *matHeaderCellDef> {{columnHeader[tableData]}} </th>
       <td mat-cell *matCellDef="let element;"> {{element[tableData]}}</td>
+      <td mat-cell *matNoDataRow> No data available</td>
     </ng-container>
     <ng-container *ngIf="tableData=='modification'">
       <th scope="col" mat-header-cell *matHeaderCellDef>{{columnHeader[tableData]}}</th>
@@ -22,4 +28,11 @@
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="objectKeys(columnHeader)"></tr>
   <tr mat-row *matRowDef="let row; columns: objectKeys(columnHeader);"></tr>
+
 </table>
+<div id="paginator">
+<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+               showFirstLastButtons
+               aria-label="Select page of periodic elements">
+</mat-paginator>
+</div>
