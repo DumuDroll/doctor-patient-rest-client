@@ -1,5 +1,7 @@
 <app-data-table-component
   [tableData]="fullInfos"
+  [totalItems]="totalItems"
+  [pageSize]="pageSize"
   [columnHeader]="columnHeader"
   [dataService]="fullInfoService"
   (showModificationDialog)="showFullInfoDialog($event)"

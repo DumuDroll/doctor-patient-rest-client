@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {FullInfo} from "../models/full-info";
 import {Observable} from "rxjs";
 
@@ -15,6 +15,20 @@ export class FullInfoService {
 
   public findAll(): Observable<FullInfo[]> {
     return this.http.get<FullInfo[]>(baseUrl);
+  }
+
+  public findAllFiltered(name?: string, page?: number, size?: number): Observable<FullInfo[]> {
+    let params = new HttpParams();
+    if (typeof name !== 'undefined') {
+      params = params.append('name', name);
+    }
+    if (typeof page !== 'undefined') {
+      params = params.append('page', page);
+    }
+    if (typeof size !== 'undefined') {
+      params = params.append('size', size);
+    }
+    return this.http.get<FullInfo[]>(`${baseUrl}filtered/`, {params});
   }
 
   public findById(id: any): Observable<FullInfo> {

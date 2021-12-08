@@ -1,5 +1,7 @@
 <app-data-table-component
   [tableData]="drugs"
+  [totalItems]="totalItems"
+  [pageSize]="pageSize"
   [columnHeader]="columnHeader"
   [dataService]="drugService"
   (showModificationDialog)="showDrugDialog($event)"

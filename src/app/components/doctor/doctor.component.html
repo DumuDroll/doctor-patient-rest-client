@@ -1,5 +1,7 @@
 <app-data-table-component
   [tableData]="doctors"
+  [totalItems]="totalItems"
+  [pageSize]="pageSize"
   [columnHeader]="columnHeader"
   [dataService]="doctorService"
   (showModificationDialog)="showDoctorDialog($event)"

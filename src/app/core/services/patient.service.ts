@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Patient} from "../models/patient";
 
 const baseUrl = 'http://localhost:8080/api/patients/';
@@ -17,6 +17,20 @@ export class PatientService {
     return this.http.get<Patient[]>(baseUrl);
   }
 
+  public findAllFiltered(fNameLName?: string, page?: number, size?: number): Observable<Patient[]> {
+    let params = new HttpParams();
+    if (typeof fNameLName !== 'undefined') {
+      params = params.append('fNameLName', fNameLName);
+    }
+    if (typeof page !== 'undefined') {
+      params = params.append('page', page);
+    }
+    if (typeof size !== 'undefined') {
+      params = params.append('size', size);
+    }
+    return this.http.get<Patient[]>(`${baseUrl}filtered/`, {params});
+  }
+
   public findById(id: any): Observable<Patient> {
     return this.http.get(`${baseUrl}/${id}`);
   }
@@ -25,7 +39,7 @@ export class PatientService {
     return this.http.post<Patient>(baseUrl, patient);
   }
 
-  public addDoctorToPatient(doctorId:any, patient: Patient){
+  public addDoctorToPatient(doctorId: any, patient: Patient) {
     return this.http.patch<Patient>(`${baseUrl}/${doctorId}`, patient)
   }
 

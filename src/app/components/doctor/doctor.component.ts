@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Doctor} from "../../core/models/doctor";
 import {DoctorService} from "../../core/services/doctor.service";
 import {DoctorDialog} from "./add-new-dialog/doctor-dialog.component";
@@ -12,38 +12,52 @@ import {MatDialog} from "@angular/material/dialog";
 export class DoctorComponent implements OnInit {
   doctors?: Doctor[];
 
-  columnHeader = {'id': 'id', 'name': 'Name', 'experience': 'Experience', 'patientsNames': "Patients",'modification': ''}
+  totalItems?: number;
+
+  pageSize?: number;
+
+  columnHeader = {
+    'id': 'id',
+    'name': 'Name',
+    'experience': 'Experience',
+    'modification': ''
+  }
 
   constructor(public dialog: MatDialog, public doctorService: DoctorService) {
   }
 
   ngOnInit(): void {
-    this.findAll()
+    this.findAllFiltered()
   }
 
-  showDoctorDialog(element?: any): void {
+  showDoctorDialog(element: any): void {
+    console.log("tst", element);
     const dialogRef = this.dialog.open(DoctorDialog, {
       width: '250px',
-      data: {id: element?.id, name: element?.name, experience: element?.experience}
+      data: {id: element?.element.id,
+        name: element?.element.name,
+        experience: element?.element.experience}
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result!=null){
-        if(element==null){
+      if (result != null) {
+        if (element == null) {
           this.doctorService.create(result)
-            .subscribe(() => this.findAll());
-        }else{
+            .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
+        } else {
           this.doctorService.update(result)
-            .subscribe(() => this.findAll());
+            .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
         }
       }
     });
   }
 
-  findAll() {
-    this.doctorService.findAll()
-      .subscribe(data => {
-        this.doctors = data;
+  findAllFiltered(name?: string, page?: number, pageSize?: number) {
+    this.doctorService.findAllFiltered(name, page, pageSize)
+      .subscribe((data: any) => {
+        console.log("data", data);
+        this.doctors = data['data'];
+        this.totalItems = data['totalItems'];
+        this.pageSize=data['pageSize'];
       });
   }
-
 }

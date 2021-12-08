@@ -12,6 +12,11 @@ import {MatDialog} from "@angular/material/dialog";
 export class FullInfoComponent implements OnInit {
 
   fullInfos?: FullInfo[];
+
+  totalItems?: number;
+
+  pageSize?: number;
+
   columnHeader = {'id': 'id', 'email': 'Email', 'birthDate': 'Birth date', 'phoneNumber': 'Phone number'
     , 'modification': ''}
 
@@ -19,26 +24,32 @@ export class FullInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.findAll();
+    this.findAllFiltered();
   }
 
   showFullInfoDialog(element?: any): void {
     const dialogRef = this.dialog.open(FullInfoDialog, {
       width: '300px',
-      data: {id: element?.id, email: element?.email, birthDate: element?.birthDate, phoneNumber: element?.phoneNumber}
+      data: {id: element?.element.id,
+        email: element?.element.email,
+        birthDate: element?.element.birthDate,
+        phoneNumber: element?.element.phoneNumber}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=null){
           this.fullInfoService.update(result)
-            .subscribe(() => this.findAll());
+            .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
       }
     });
   }
 
-  findAll() {
-    this.fullInfoService.findAll()
-      .subscribe(data => {
-        this.fullInfos = data;
+  findAllFiltered(name?: string, page?: number, pageSize?: number) {
+    this.fullInfoService.findAllFiltered(name,page,pageSize)
+      .subscribe((data: any) => {
+        console.log("data", data);
+        this.fullInfos = data['data'];
+        this.totalItems = data['totalItems'];
+        this.pageSize=data['pageSize'];
       });
   }
 

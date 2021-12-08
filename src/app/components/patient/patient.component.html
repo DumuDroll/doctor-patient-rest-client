@@ -1,7 +1,8 @@
 <app-data-table-component
   [tableData]="patients"
+  [totalItems]="totalItems"
+  [pageSize]="pageSize"
   [columnHeader]="columnHeader"
   [dataService]="patientService"
-  [parentEntity]="patientEntityName"
   (showModificationDialog)="showPatientDialog($event)"
   *ngIf="patients "></app-data-table-component>
