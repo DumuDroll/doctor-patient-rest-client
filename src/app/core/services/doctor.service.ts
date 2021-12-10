@@ -33,7 +33,7 @@ export class DoctorService {
   }
 
   public findById(id: number): Observable<Doctor> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get(`${baseUrl}${id}`);
   }
 
   public create(doctor: Doctor) {
@@ -45,7 +45,7 @@ export class DoctorService {
   }
 
   public deleteById(id: number): Observable<Doctor[]> {
-    return this.http.delete<Doctor[]>(`${baseUrl}/${id}`)
+    return this.http.delete<Doctor[]>(`${baseUrl}${id}`)
   }
 
 }

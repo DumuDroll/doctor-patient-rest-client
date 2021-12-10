@@ -9,6 +9,7 @@ import {DateService} from "../../../core/services/date.service";
 import * as moment from 'moment';
 import {MatSelect} from "@angular/material/select";
 import {MatOption} from "@angular/material/core";
+import {PatientDrug} from "../../../core/models/patientDrug";
 
 class DialogData {
   id?: number;
@@ -17,7 +18,7 @@ class DialogData {
   fullInfo: FullInfo = new FullInfo();
   doctor?: Doctor;
   doctors?: Doctor[];
-  drugs?: Drug[];
+  drugs?: PatientDrug[];
   allDrugs?: Drug[];
 }
 
@@ -28,9 +29,13 @@ class DialogData {
   styleUrls: ['./patient-dialog.component.css']
 })
 export class PatientDialog implements OnInit {
+
   patient?: Patient;
+
   patientForm!: FormGroup;
+
   allSelected = false;
+
   @ViewChild('drugsSelect') drugsSelect!: MatSelect;
 
   constructor(

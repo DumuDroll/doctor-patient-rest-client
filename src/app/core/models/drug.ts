@@ -1,9 +1,11 @@
-import {PatientSlim} from "./patientSlim";
-
 export class Drug {
 
-  id?: number;
+  id: number;
   name?: string;
-  patients?: PatientSlim[];
 
+
+  constructor(id: number, name: string) {
+    this.id = id;
+    this.name = name;
+  }
 }

@@ -32,7 +32,7 @@ export class FullInfoService {
   }
 
   public findById(id: any): Observable<FullInfo> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get(`${baseUrl}${id}`);
   }
 
   public create(fullInfo: FullInfo) {
@@ -44,7 +44,7 @@ export class FullInfoService {
   }
 
   public deleteById(id: any): Observable<FullInfo[]> {
-    return this.http.delete<FullInfo[]>(`${baseUrl}/${id}`)
+    return this.http.delete<FullInfo[]>(`${baseUrl}${id}`)
   }
 
 }

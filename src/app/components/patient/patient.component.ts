@@ -8,6 +8,7 @@ import {Doctor} from "../../core/models/doctor";
 import {DoctorService} from "../../core/services/doctor.service";
 import {DrugService} from "../../core/services/drug.service";
 import {Drug} from "../../core/models/drug";
+import {PatientDrug} from "../../core/models/patientDrug";
 
 @Component({
   selector: 'app-patient',
@@ -52,10 +53,16 @@ export class PatientComponent implements OnInit {
   }
 
   showPatientDialog(element?: any): void {
-    let fullInfo = element?.fullInfo;
+    console.log("ele", element);
+    let fullInfo = element?.element.fullInfo;
     if (fullInfo == null) {
       fullInfo = new FullInfo();
     }
+    let drugsFromPatientDrugs: Drug[];
+    drugsFromPatientDrugs=[];
+    element?.element.drugs.forEach((drug: PatientDrug) => {
+      drugsFromPatientDrugs.push(new Drug(drug.drugId, ""));
+    })
     const dialogRef = this.dialog.open(PatientDialog, {
       width: '300px',
       data: {
@@ -64,7 +71,7 @@ export class PatientComponent implements OnInit {
         lastName: element?.element.lastName,
         fullInfo: fullInfo,
         doctor: element?.element.doctor,
-        drugs: element?.element.drugs,
+        drugs: drugsFromPatientDrugs,
         doctors: this.doctors,
         allDrugs: this.drugs
       }
@@ -78,13 +85,25 @@ export class PatientComponent implements OnInit {
             this.patientService.addDoctorToPatient(result.doctor.id, result)
               .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
           }
+          let patientDrugs: PatientDrug[];
           if (result.drugs != null) {
+            patientDrugs = [];
             result.drugs.forEach((drug: Drug) => {
-              this.drugService.addDrugToPatient(result.id, drug)
-                .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
-            })
+              let patientDrug = new PatientDrug(result.id, drug.id, new Date, new Date);
+              patientDrugs.push(patientDrug);
+            });
+            this.patientService.addDrugToPatient(result.id, patientDrugs)
+              .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
           }
         } else {
+          let patientDrugs: PatientDrug[];
+          patientDrugs = [];
+          result.drugs.forEach((drug:Drug)=>{
+            let patientDrug = new PatientDrug(result.id, drug.id, new Date, new Date);
+            patientDrugs.push(patientDrug);
+          })
+          result.drugs=patientDrugs;
+          console.log("patientDrugs", result.drugs);
           this.patientService.update(result)
             .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
         }
@@ -93,7 +112,7 @@ export class PatientComponent implements OnInit {
   }
 
   findAllFiltered(name?: string, page?: number, pageSize?: number) {
-    console.log("name",name);
+    console.log("name", name);
     this.patientService.findAllFiltered(name, page, pageSize)
       .subscribe((data: any) => {
         this.patients = data['data'];

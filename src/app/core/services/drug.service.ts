@@ -31,16 +31,12 @@ export class DrugService {
     return this.http.get<Drug[]>(`${baseUrl}filtered/`, {params});
   }
 
-  public findById(id: number): Observable<Drug> {
-    return this.http.get(`${baseUrl}/${id}`);
-  }
-
   public create(patient: Drug) {
     return this.http.post<Drug>(baseUrl, patient);
   }
 
   public addDrugToPatient(patientId: number, drug: Drug) {
-    return this.http.patch<Drug>(`${baseUrl}/${patientId}`, drug)
+    return this.http.patch<Drug>(`${baseUrl}${patientId}`, drug)
   }
 
   public update(data: Drug): Observable<Drug> {
@@ -48,7 +44,7 @@ export class DrugService {
   }
 
   public deleteById(id: number): Observable<Drug[]> {
-    return this.http.delete<Drug[]>(`${baseUrl}/${id}`)
+    return this.http.delete<Drug[]>(`${baseUrl}${id}`)
   }
 
 }
