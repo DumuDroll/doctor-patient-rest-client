@@ -8,7 +8,7 @@ import {Doctor} from "../../core/models/doctor";
 import {DoctorService} from "../../core/services/doctor.service";
 import {DrugService} from "../../core/services/drug.service";
 import {Drug} from "../../core/models/drug";
-import {PatientDrug} from "../../core/models/patientDrug";
+import {PatientPrescription} from "../../core/models/patientPrescription";
 
 @Component({
   selector: 'app-patient',
@@ -24,8 +24,6 @@ export class PatientComponent implements OnInit {
   doctors?: Doctor[];
 
   drugs?: Drug[];
-
-  patientEntityName = 'patient';
 
   totalItems?: number;
 
@@ -43,25 +41,26 @@ export class PatientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.doctorService.findAll().subscribe(data => {
-      this.doctors = data
-    })
-    this.drugService.findAll().subscribe(data => {
-      this.drugs = data
-    })
+    this.doctorService.findAll().subscribe(data => this.doctors = data)
+    this.drugService.findAll().subscribe(data => this.drugs = data)
     this.findAllFiltered()
   }
 
   showPatientDialog(element?: any): void {
-    console.log("ele", element);
     let fullInfo = element?.element.fullInfo;
     if (fullInfo == null) {
       fullInfo = new FullInfo();
     }
-    let drugsFromPatientDrugs: Drug[];
-    drugsFromPatientDrugs=[];
-    element?.element.drugs.forEach((drug: PatientDrug) => {
-      drugsFromPatientDrugs.push(new Drug(drug.drugId, ""));
+    let drugsFromDB: PatientPrescription[] = [];
+    this.drugs?.forEach(drug => {
+      let drugToPrescription = new PatientPrescription(element.id, drug.id, drug.name, new Date, new Date);
+      element.element.drugs.forEach((prescription: PatientPrescription) => {
+        if (drugToPrescription.drugId === prescription.drugId) {
+          drugToPrescription.prescriptionStartDate = prescription.prescriptionStartDate;
+          drugToPrescription.prescriptionEndDate = prescription.prescriptionEndDate;
+        }
+      })
+      drugsFromDB.push(drugToPrescription);
     })
     const dialogRef = this.dialog.open(PatientDialog, {
       width: '300px',
@@ -71,9 +70,9 @@ export class PatientComponent implements OnInit {
         lastName: element?.element.lastName,
         fullInfo: fullInfo,
         doctor: element?.element.doctor,
-        drugs: drugsFromPatientDrugs,
+        drugs: element?.element.drugs,
         doctors: this.doctors,
-        allDrugs: this.drugs
+        allDrugs: drugsFromDB
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -85,25 +84,13 @@ export class PatientComponent implements OnInit {
             this.patientService.addDoctorToPatient(result.doctor.id, result)
               .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
           }
-          let patientDrugs: PatientDrug[];
           if (result.drugs != null) {
-            patientDrugs = [];
-            result.drugs.forEach((drug: Drug) => {
-              let patientDrug = new PatientDrug(result.id, drug.id, new Date, new Date);
-              patientDrugs.push(patientDrug);
-            });
-            this.patientService.addDrugToPatient(result.id, patientDrugs)
+            result.drugs.forEach((drug: PatientPrescription) => drug.patientId = result.id);
+            this.patientService.addDrugToPatient(result.id, result.drugs)
               .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
           }
         } else {
-          let patientDrugs: PatientDrug[];
-          patientDrugs = [];
-          result.drugs.forEach((drug:Drug)=>{
-            let patientDrug = new PatientDrug(result.id, drug.id, new Date, new Date);
-            patientDrugs.push(patientDrug);
-          })
-          result.drugs=patientDrugs;
-          console.log("patientDrugs", result.drugs);
+          result.drugs.forEach((drug: PatientPrescription) => drug.patientId = result.id);
           this.patientService.update(result)
             .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
         }
@@ -112,7 +99,6 @@ export class PatientComponent implements OnInit {
   }
 
   findAllFiltered(name?: string, page?: number, pageSize?: number) {
-    console.log("name", name);
     this.patientService.findAllFiltered(name, page, pageSize)
       .subscribe((data: any) => {
         this.patients = data['data'];

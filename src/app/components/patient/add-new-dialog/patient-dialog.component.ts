@@ -3,13 +3,12 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Patient} from "../../../core/models/patient";
 import {FullInfo} from "../../../core/models/full-info";
 import {Doctor} from "../../../core/models/doctor";
-import {Drug} from "../../../core/models/drug";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DateService} from "../../../core/services/date.service";
 import * as moment from 'moment';
 import {MatSelect} from "@angular/material/select";
 import {MatOption} from "@angular/material/core";
-import {PatientDrug} from "../../../core/models/patientDrug";
+import {PatientPrescription} from "../../../core/models/patientPrescription";
 
 class DialogData {
   id?: number;
@@ -18,8 +17,8 @@ class DialogData {
   fullInfo: FullInfo = new FullInfo();
   doctor?: Doctor;
   doctors?: Doctor[];
-  drugs?: PatientDrug[];
-  allDrugs?: Drug[];
+  drugs?: PatientPrescription[];
+  allDrugs?: PatientPrescription[];
 }
 
 

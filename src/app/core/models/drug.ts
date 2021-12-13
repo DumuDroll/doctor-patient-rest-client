@@ -1,8 +1,7 @@
 export class Drug {
 
   id: number;
-  name?: string;
-
+  name: string;
 
   constructor(id: number, name: string) {
     this.id = id;

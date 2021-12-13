@@ -4,7 +4,7 @@ import {
 import {MatTableDataSource} from "@angular/material/table";
 import {FullInfoService} from "../../core/services/full-info.service";
 import {MatPaginator} from "@angular/material/paginator";
-import {tap} from "rxjs";
+import {PatientService} from "../../core/services/patient.service";
 
 @Component({
   selector: 'app-data-table-component',
@@ -25,9 +25,7 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
-    console.log("tableData", this.tableData);
     this.dataSource = new MatTableDataSource(this.tableData);
-
   }
 
   ngOnChanges(): void {
@@ -38,18 +36,24 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
     return (this.dataService instanceof FullInfoService);
   }
 
+  checkIfPatient() {
+    return (this.dataService instanceof PatientService);
+  }
+
   applyFilter(filterValue: any) {
     this.dataSource.filter = filterValue;
   }
 
-  applyApiFilter(filterValue: string, page: number) {
+  applyApiFilter(filterValue: string, page?: number) {
     this.dataService.findAllFiltered(filterValue, page, this.paginator.pageSize).subscribe((data: any) => {
       this.dataSource = new MatTableDataSource(data['data']);
-      this.paginator.page.pipe(tap(() => data['currentPage']));
+      this.paginator.pageIndex = data['currentPage'];
       this.totalItems = data['totalItems'];
       this.pageSize = data['pageSize'];
-      console.log("total",this.totalItems);
     });
+  }
+
+  applyDateApiFilter(filterValue: string) {
   }
 
   changePage(filterValue: any, page: any) {

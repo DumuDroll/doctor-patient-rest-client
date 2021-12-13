@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Patient} from "../models/patient";
-import {PatientDrug} from "../models/patientDrug";
+import {PatientPrescription} from "../models/patientPrescription";
 
 const baseUrl = 'http://localhost:8080/api/patients/';
 
@@ -36,7 +36,7 @@ export class PatientService {
     return this.http.patch<Patient>(`${baseUrl}${doctorId}`, patient)
   }
 
-  public addDrugToPatient(patientId: number, patientDrugs: PatientDrug[]) {
+  public addDrugToPatient(patientId: number, patientDrugs: PatientPrescription[]) {
     console.log("dataApi", patientDrugs);
     return this.http.patch<Patient>(`${baseUrl}${patientId}`, patientDrugs);
   }

@@ -3,7 +3,10 @@
   <input #filter matInput type="text" (keyup)="applyFilter(filter.value)" placeholder="Filter by all columns">
 </mat-form-field>
   <mat-form-field style="margin-left: 60%">
-    <input #filterApi matInput type="text" (keyup)="applyApiFilter(filterApi.value, paginator.pageIndex)" placeholder="Filter by main columns">
+    <input #filterApi matInput type="text" (keyup)="applyApiFilter(filterApi.value)" placeholder="Filter by main columns">
+  </mat-form-field>
+  <mat-form-field *ngIf="checkIfPatient()" style="margin-left: 60%">
+    <input #filterApi matInput type="text" (keyup)="applyDateApiFilter(filterApi.value)" placeholder="Filter by date columns">
   </mat-form-field>
 <button *ngIf="!checkIfFullInfo()" mat-icon-button color="accent" (click)="showModificationDialog.emit()" style="margin-left: 85%">
  Add new <mat-icon>add_box</mat-icon>

@@ -1,6 +1,6 @@
 import {FullInfo} from "./full-info";
 import {Doctor} from "./doctor";
-import {PatientDrug} from "./patientDrug";
+import {PatientPrescription} from "./patientPrescription";
 
 export class Patient {
 
@@ -9,6 +9,6 @@ export class Patient {
   lastName?: string;
   fullInfo?: FullInfo;
   doctor?: Doctor;
-  drugs?: PatientDrug[];
+  drugs?: PatientPrescription[];
 
 }
