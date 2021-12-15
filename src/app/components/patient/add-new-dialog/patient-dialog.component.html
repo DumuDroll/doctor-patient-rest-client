@@ -1,5 +1,5 @@
 <div mat-dialog-content>
-  <form [formGroup]="patientForm" (submit)="submit()">
+  <form [formGroup]="patientForm" (ngSubmit)="submit()">
     <mat-form-field appearance="fill">
       <mat-label>First Name</mat-label>
       <input matInput formControlName="firstName">
@@ -42,25 +42,26 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <div *ngFor="let prescription of data.drugs">
+  </form>
+    <div *ngFor="let prescription of data.drugs;">
       Drug: {{prescription.drugName}}
       <mat-form-field appearance="fill">
         <mat-label>Prescription start date</mat-label>
-        <input matInput [value]="prescription.prescriptionStartDate" [matDatepicker]="pickerStart">
+        <input matInput [(ngModel)]="prescription.prescriptionStartDate" [matDatepicker]="pickerStart">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Prescription end date</mat-label>
-        <input matInput [value]="prescription.prescriptionEndDate" [matDatepicker]="pickerEnd">
+        <input matInput [(ngModel)]="prescription.prescriptionEndDate" [matDatepicker]="pickerEnd">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
       </mat-form-field>
     </div>
     <div mat-dialog-actions>
       <button mat-button [mat-dialog-close]="true" (click)="onCancelClick()">Cancel</button>
-      <button mat-button type="submit" [disabled]="this.patientForm.invalid" [mat-dialog-close]="data">Save</button>
+      <button mat-button type="submit" [disabled]="this.patientForm.invalid" (click)="submit()" [mat-dialog-close]="data">Save</button>
     </div>
-  </form>
+
 </div>
 

@@ -21,9 +21,9 @@ export class PatientPrescriptionComponent implements OnInit {
   pageSize?: number;
 
   columnHeader = {
-    'name': 'Name',
-    'prescriptionStartDate': 'From',
-    'prescriptionEndDate': 'To'
+    'drugName': 'Drug',
+    'prescriptionStartDate': 'Start date',
+    'prescriptionEndDate': 'End date', 'modification': ''
   }
 
   constructor(public dialog: MatDialog,
@@ -33,10 +33,11 @@ export class PatientPrescriptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.patientService.findAll().subscribe(data => this.patients=data);
-    this.findAllFiltered()
+    this.findAllFiltered();
   }
-  findAllFiltered(dateFrom?: string, dateTo?: string, page?: number, pageSize?: number) {
-    this.patientPrescriptionService.findAllFiltered(dateFrom, dateTo, page, pageSize)
+
+  findAllFiltered() {
+    this.patientPrescriptionService.findAllFiltered()
       .subscribe((data: any) => {
         this.patientPrescriptions = data['data'];
         this.totalItems = data['totalItems'];

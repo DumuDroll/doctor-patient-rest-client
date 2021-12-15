@@ -4,7 +4,6 @@ import {
 import {MatTableDataSource} from "@angular/material/table";
 import {FullInfoService} from "../../core/services/full-info.service";
 import {MatPaginator} from "@angular/material/paginator";
-import {PatientService} from "../../core/services/patient.service";
 
 @Component({
   selector: 'app-data-table-component',
@@ -12,16 +11,25 @@ import {PatientService} from "../../core/services/patient.service";
   styleUrls: ['./data-table-component.component.css']
 })
 export class DataTableComponentComponent implements OnInit, OnChanges {
+
   @Output() showModificationDialog:
     EventEmitter<{ element: any, filterValue: string, page: number, pageSize: number }> = new EventEmitter();
+
   @Input() dataService?: any;
+
   @Input() totalItems?: number;
+
   @Input() pageSize?: number;
-  @Input() tableData: any[] | undefined;
+
+  @Input() tableData?: any[];
+
   @Input() columnHeader: any;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   objectKeys = Object.keys;
-  dataSource: any | undefined;
+
+  dataSource: any;
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -36,10 +44,6 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
     return (this.dataService instanceof FullInfoService);
   }
 
-  checkIfPatient() {
-    return (this.dataService instanceof PatientService);
-  }
-
   applyFilter(filterValue: any) {
     this.dataSource.filter = filterValue;
   }
@@ -51,9 +55,6 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
       this.totalItems = data['totalItems'];
       this.pageSize = data['pageSize'];
     });
-  }
-
-  applyDateApiFilter(filterValue: string) {
   }
 
   changePage(filterValue: any, page: any) {

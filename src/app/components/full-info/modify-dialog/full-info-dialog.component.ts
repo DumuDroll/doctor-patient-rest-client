@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FullInfo} from "../../../core/models/full-info";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DateService} from "../../../core/services/date.service";
+import {DateService} from "../../../core/services/date/date.service";
 import * as moment from 'moment';
 
 class DialogData {
@@ -40,7 +40,7 @@ export class FullInfoDialog implements OnInit {
   ngOnInit(): void {
     this.fullInfoForm = this.formBuilder.group({
       email: [this.data.email, [Validators.email, Validators.required]],
-      birthDate: [moment(this.data.birthDate, "dd/MM/yyyy").toDate()],
+      birthDate: [this.data.birthDate],
       phoneNumber: [this.data.phoneNumber]
     });
   }

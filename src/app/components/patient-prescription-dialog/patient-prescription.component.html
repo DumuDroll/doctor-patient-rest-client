@@ -1,6 +1,8 @@
-<app-data-table-component
+<app-patient-prescription-table
 [tableData]="patientPrescriptions"
 [totalItems]="totalItems"
 [pageSize]="pageSize"
 [columnHeader]="columnHeader"
-[dataService]="patientService"></app-data-table-component>
+[dataService]="patientPrescriptionService"
+[patients]="patients"
+*ngIf="patientPrescriptions "></app-patient-prescription-table>

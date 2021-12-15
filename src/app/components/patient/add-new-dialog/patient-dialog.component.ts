@@ -4,7 +4,7 @@ import {Patient} from "../../../core/models/patient";
 import {FullInfo} from "../../../core/models/full-info";
 import {Doctor} from "../../../core/models/doctor";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DateService} from "../../../core/services/date.service";
+import {DateService} from "../../../core/services/date/date.service";
 import * as moment from 'moment';
 import {MatSelect} from "@angular/material/select";
 import {MatOption} from "@angular/material/core";
@@ -49,7 +49,7 @@ export class PatientDialog implements OnInit {
       firstName: [this.data.firstName, Validators.required],
       lastName: [this.data.lastName, Validators.required],
       email: [this.data.fullInfo.email, [Validators.required, Validators.email]],
-      birthDate: [moment(this.data.fullInfo.birthDate, "dd/MM/yyyy").toDate()],
+      birthDate: [this.data.fullInfo.birthDate],
       phoneNumber: [this.data.fullInfo.phoneNumber]
     });
   }

@@ -1,0 +1,56 @@
+<mat-label>Choose patient</mat-label>
+<form [formGroup]="filterForm" (submit)="submit()">
+  <mat-form-field appearance="fill">
+    <mat-select #patientSelect formControlName="patient"
+                [compareWith]="compareObjects">
+      <mat-option [value]=null>No selection</mat-option>
+      <mat-option *ngFor="let patient of patients" [value]="patient">
+        {{patient.firstName}} {{patient.lastName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prescription start date</mat-label>
+      <input matInput #fromInput formControlName="prescriptionStartDate" [matDatepicker]="pickerStart">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Prescription end date</mat-label>
+      <input matInput #toInput formControlName="prescriptionEndDate" [matDatepicker]="pickerEnd">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+    <button mat-button mat-icon-button color="accent" type="submit">
+      <mat-icon>filter_list</mat-icon>
+      Filter
+    </button><div>
+    <button mat-button type="button" (click)="clearDateFilters()" mat-icon-button color="accent">
+      Clear date filters
+    </button>
+  </div>
+  </div>
+
+</form>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container [matColumnDef]="tableDate" *ngFor="let tableDate of objectKeys(columnHeader)">
+    <ng-container>
+      <th scope="col" mat-header-cell *matHeaderCellDef> {{columnHeader[tableDate]}} </th>
+      <td mat-cell *matCellDef="let element;"> {{element[tableDate]}}</td>
+      <td mat-cell *matNoDataRow> No data available</td>
+    </ng-container>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="objectKeys(columnHeader)"></tr>
+  <tr mat-row *matRowDef="let row; columns: objectKeys(columnHeader);"></tr>
+</table>
+<mat-paginator
+  [length]="totalItems"
+  (page)="changePage(patientSelect.value, paginator.pageIndex)"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons
+  aria-label="Select page of periodic elements">
+</mat-paginator>

@@ -13,7 +13,7 @@ export class PatientPrescriptionService {
   constructor(private http: HttpClient) {
   }
 
-  public findAllFiltered(dateFrom?: string, dateTo?: string,page?: number, size?: number): Observable<PatientPrescription[]> {
+  public findAllFiltered(dateFrom?: string, dateTo?: string, page?: number, size?: number, patientId?: string): Observable<PatientPrescription[]> {
     let params = new HttpParams();
     if (typeof dateFrom !== 'undefined') {
       params = params.append('dateFrom', dateFrom);
@@ -26,6 +26,9 @@ export class PatientPrescriptionService {
     }
     if (typeof size !== 'undefined') {
       params = params.append('size', size);
+    }
+    if (typeof patientId !== 'undefined') {
+      params = params.append('patientId', patientId);
     }
     return this.http.get<PatientPrescription[]>(`${baseUrl}filtered/`, {params});
   }
