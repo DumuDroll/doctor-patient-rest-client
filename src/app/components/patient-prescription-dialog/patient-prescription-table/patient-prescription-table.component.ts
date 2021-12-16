@@ -91,7 +91,4 @@ export class PatientPrescriptionTableComponent implements OnInit {
 
   }
 
-  changePage(filterValue: any, page: any) {
-    this.applyApiFilter(filterValue, page);
-  }
 }

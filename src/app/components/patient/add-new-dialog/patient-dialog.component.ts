@@ -5,7 +5,6 @@ import {FullInfo} from "../../../core/models/full-info";
 import {Doctor} from "../../../core/models/doctor";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DateService} from "../../../core/services/date/date.service";
-import * as moment from 'moment';
 import {MatSelect} from "@angular/material/select";
 import {MatOption} from "@angular/material/core";
 import {PatientPrescription} from "../../../core/models/patientPrescription";
