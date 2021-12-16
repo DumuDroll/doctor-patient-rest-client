@@ -1,39 +1,43 @@
-<mat-label>Choose patient</mat-label>
 <form [formGroup]="filterForm" (submit)="submit()">
-  <mat-form-field appearance="fill">
-    <mat-select #patientSelect formControlName="patient"
-                [compareWith]="compareObjects">
-      <mat-option [value]=null>No selection</mat-option>
-      <mat-option *ngFor="let patient of patients" [value]="patient">
-        {{patient.firstName}} {{patient.lastName}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <div>
-
+  <div class="PatientSelector">
+    <mat-label id="patient">Patient:</mat-label>
     <mat-form-field appearance="fill">
-      <mat-label>Prescription start date</mat-label>
-      <input matInput #fromInput formControlName="prescriptionStartDate" [matDatepicker]="pickerStart">
-      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-      <mat-datepicker #pickerStart></mat-datepicker>
+      <mat-select #patientSelect formControlName="patient"
+                  [compareWith]="compareObjects">
+        <mat-option [value]=null>No selection</mat-option>
+        <mat-option *ngFor="let patient of patients" [value]="patient">
+          {{patient.firstName}} {{patient.lastName}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Prescription end date</mat-label>
-      <input matInput #toInput formControlName="prescriptionEndDate" [matDatepicker]="pickerEnd">
-      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-      <mat-datepicker #pickerEnd></mat-datepicker>
-    </mat-form-field>
-    <button mat-button mat-icon-button color="accent" type="submit">
-      <mat-icon>filter_list</mat-icon>
-      Filter
-    </button><div>
-    <button mat-button type="button" (click)="clearDateFilters()" mat-icon-button color="accent">
-      Clear date filters
-    </button>
-  </div>
-  </div>
 
+
+    <div class="DatePickers">
+      <mat-form-field appearance="fill">
+        <mat-label>Prescription start date</mat-label>
+        <input matInput #fromInput formControlName="prescriptionStartDate" [matDatepicker]="pickerStart">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Prescription end date</mat-label>
+        <input matInput #toInput formControlName="prescriptionEndDate" [matDatepicker]="pickerEnd">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+      <div>
+        <button id="filterButton" mat-button mat-icon-button color="accent" type="submit">
+          <mat-icon>filter_list</mat-icon>
+          Filter
+        </button>
+      </div>
+      <div class="clearFilterButton">
+        <button id="filterClearButton" mat-button type="button" (click)="clearDateFilters()" mat-icon-button color="accent">
+          Clear date filters
+        </button>
+      </div>
+    </div>
+  </div>
 </form>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container [matColumnDef]="tableDate" *ngFor="let tableDate of objectKeys(columnHeader)">

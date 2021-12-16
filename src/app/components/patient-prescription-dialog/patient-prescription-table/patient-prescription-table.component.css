@@ -1,9 +1,23 @@
 table {
   width: 85%;
   margin-left: 7.5%;
-  margin-top: 1.5%;
 }
 mat-paginator{
   width: 85.1%;
   margin-left: 7.45%;
+}
+.PatientSelector{
+  display: flex;
+  margin-left: 7.5%;
+  margin-top: 1.5%;
+}
+.DatePickers{
+  display: flex;
+  margin-left: 15%;
+}
+.clearFilterButton{
+  margin-left: 7.5%;
+}
+mat-label#patient{
+  margin-top: 1.25%;
 }

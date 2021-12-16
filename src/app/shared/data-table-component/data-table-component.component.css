@@ -1,9 +1,19 @@
 table {
   width: 85%;
   margin-left: 7.5%;
-  margin-top: 1.5%;
 }
 mat-paginator{
   width: 85.1%;
   margin-left: 7.45%;
+}
+.filters{
+  margin-left: 7.45%;
+  display: flex;
+}
+mat-form-field#filterMain{
+  margin-left: 7.45%;
+}
+button#buttonAdd{
+  margin-top: 1.5%;
+  margin-left: 46.45%;
 }

@@ -2,8 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Patient} from "../../../core/models/patient";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import * as moment from "moment";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {DateService} from "../../../core/services/date/date.service";
 import {MatInput} from "@angular/material/input";
 
@@ -57,13 +56,6 @@ export class PatientPrescriptionTableComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.tableData);
   }
 
-  onPatientChange(element?: any, page?: number) {
-    this.patient = element;
-    let pId = element.id;
-    this.applyApiFilter(page, pId.toString());
-  }
-
-
   compareObjects(o1: any, o2: any) {
     if (o1 != null && o2 != null) {
       return o1.id == o2.id;
@@ -72,13 +64,13 @@ export class PatientPrescriptionTableComponent implements OnInit {
   }
 
   clearDateFilters() {
-    this.filterForm.value.prescriptionStartDate=null;
-    this.filterForm.value.prescriptionEndDate=null;
+    this.filterForm.value.prescriptionStartDate='';
+    this.filterForm.value.prescriptionEndDate='';
     this.fromInput.value = '';
     this.toInput.value = '';
   }
 
-  applyApiFilter(page?: number, patientId?: string, startDate?: Date, endDate?: Date) {
+  applyApiFilter(page?: number, startDate?: Date, endDate?: Date, patientId?: string,) {
     this.dataService.findAllFiltered(this.dateService.transform(startDate), this.dateService.transform(endDate),
       page, this.paginator.pageSize, patientId).subscribe((data: any) => {
       this.dataSource = new MatTableDataSource(data['data']);
@@ -90,10 +82,11 @@ export class PatientPrescriptionTableComponent implements OnInit {
 
   submit() {
     if (this.filterForm.value.patient === null) {
-      this.applyApiFilter(this.paginator.pageIndex, this.filterForm.value.prescriptionStartDate, this.filterForm.value.prescriptionEndDate);
+      this.applyApiFilter(this.paginator.pageIndex, this.filterForm.value.prescriptionStartDate,
+        this.filterForm.value.prescriptionEndDate);
     } else {
-      this.applyApiFilter(this.paginator.pageIndex, this.filterForm.value.patient.id,
-        this.filterForm.value.prescriptionStartDate, this.filterForm.value.prescriptionEndDate);
+      this.applyApiFilter(this.paginator.pageIndex, this.filterForm.value.prescriptionStartDate,
+        this.filterForm.value.prescriptionEndDate, this.filterForm.value.patient.id);
     }
 
   }
