@@ -5,13 +5,15 @@ import {PatientComponent} from "./components/patient/patient.component";
 import {DrugComponent} from "./components/drug/drug.component";
 import {FullInfoComponent} from "./components/full-info/full-info.component";
 import {PatientPrescriptionComponent} from "./components/patient-prescription-dialog/patient-prescription.component";
+import {LoginComponent} from "./components/login/login.component";
 
 const routes: Routes = [
   {path: 'doctors', component: DoctorComponent},
   {path: 'patients', component: PatientComponent},
   {path: 'patientPrescriptions', component: PatientPrescriptionComponent},
   {path: 'drugs', component: DrugComponent},
-  {path: 'fullInfo', component: FullInfoComponent}
+  {path: 'fullInfo', component: FullInfoComponent},
+  {path: '', component: LoginComponent}
 ];
 
 @NgModule({

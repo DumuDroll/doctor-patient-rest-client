@@ -33,6 +33,8 @@ import {DatePipe} from '@angular/common'
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { PatientPrescriptionComponent } from './components/patient-prescription-dialog/patient-prescription.component';
 import { PatientPrescriptionTableComponent } from './components/patient-prescription-dialog/patient-prescription-table/patient-prescription-table.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { PatientPrescriptionTableComponent } from './components/patient-prescrip
     DrugDialog,
     DataTableComponentComponent,
     PatientPrescriptionComponent,
-    PatientPrescriptionTableComponent
+    PatientPrescriptionTableComponent,
+    UserComponent,
+    LoginComponent
   ],
   imports: [
     ReactiveFormsModule,
