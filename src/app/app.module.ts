@@ -3,7 +3,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {FullInfoService} from './core/services/full-info.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -36,7 +36,7 @@ import { PatientPrescriptionTableComponent } from './components/patient-prescrip
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/login/login.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {HttpInterceptorService} from "./core/services/http-interceptor.service";
+import {authInterceptorProviders} from "./core/helper/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -53,7 +53,7 @@ import {HttpInterceptorService} from "./core/services/http-interceptor.service";
     PatientPrescriptionComponent,
     PatientPrescriptionTableComponent,
     UserComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -80,10 +80,7 @@ import {HttpInterceptorService} from "./core/services/http-interceptor.service";
       deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS,
       useValue: MY_FORMATS},
-    {provide: HTTP_INTERCEPTORS,
-      useClass: HttpInterceptorService,
-      multi: true},
-    FullInfoService, DrugService, DoctorService, PatientService, DatePipe
+    FullInfoService, DrugService, DoctorService, PatientService, DatePipe, authInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })
