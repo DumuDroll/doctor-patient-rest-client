@@ -8,6 +8,6 @@
     <input type="password" matInput formControlName="password">
   </mat-form-field>
   <div>
-    <button mat-button type="submit">Login</button>
+    <button mat-button type="submit" [disabled]="this.loginForm.invalid">Login</button>
   </div>
 </form>
