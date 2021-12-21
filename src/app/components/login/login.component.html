@@ -1,13 +1,23 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="username">
-    </mat-form-field>
+<form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="isLoggedIn==false">
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="username">
+  </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
     <input type="password" matInput formControlName="password">
   </mat-form-field>
   <div>
-    <button mat-button type="submit" [disabled]="this.loginForm.invalid">Login</button>
+    <button mat-button type="submit" [disabled]="this.loginForm.invalid">Sign in</button>
   </div>
 </form>
+<div class="container" *ngIf="isLoggedIn">
+  <header class="jumbotron">
+    <h3>
+      Welcome
+    </h3>
+  </header>
+  <p>
+    Use menu button to navigate
+  </p>
+</div>

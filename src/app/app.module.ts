@@ -37,6 +37,11 @@ import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/login/login.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {authInterceptorProviders} from "./core/helper/auth.interceptor";
+import { RegisterComponent } from './components/register/register.component';
+import { BoardAdminComponent } from './components/board-admin/board-admin.component';
+import { BoardUserComponent } from './components/board-user/board-user.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -54,26 +59,31 @@ import {authInterceptorProviders} from "./core/helper/auth.interceptor";
     PatientPrescriptionTableComponent,
     UserComponent,
     LoginComponent,
+    RegisterComponent,
+    BoardAdminComponent,
+    BoardUserComponent,
+    ProfileComponent,
   ],
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    MatSidenavModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatListModule,
-    MatIconModule,
-    MatTableModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatPaginatorModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        MatSidenavModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatListModule,
+        MatIconModule,
+        MatTableModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatPaginatorModule,
+        MatSnackBarModule,
+        MatTabsModule
+    ],
   providers: [
     {provide: DateAdapter,
       useClass: MomentDateAdapter,

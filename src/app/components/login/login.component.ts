@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../core/services/authentication.service";
-import {User} from "../../core/models/user";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TokenStorageService} from "../../core/services/token-storage.service";
+import {UserService} from "../../core/services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -16,11 +17,14 @@ export class LoginComponent implements OnInit {
   successMessage?: string;
   invalidLogin = false;
   loginSuccess = false;
+  isLoggedIn = false;
 
   constructor(private snackBar: MatSnackBar,
               private router: Router,
               private formBuilder: FormBuilder,
-              public userService: AuthenticationService) {
+              private userService: UserService,
+              private tokenStorageService: TokenStorageService,
+              public authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -31,12 +35,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.userService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe({
-      next: () => {
+    this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe({
+      next: (data) => {
+        this.tokenStorageService.saveToken(data.accessToken);
+        this.tokenStorageService.saveUser(data);
         this.invalidLogin = false;
         this.loginSuccess = true;
         this.successMessage = 'Login Successful.';
-        this.router.navigateByUrl('/patients');
+        this.userService.updateLoggedInInfo();
+        this.router.navigateByUrl("/patients");
       },
       error: () => {
         this.invalidLogin = true;

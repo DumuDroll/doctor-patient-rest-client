@@ -1,0 +1,7 @@
+.icon-menu {
+  transform: scale(2);
+}
+.icon-logout {
+  transform: scale(1.25);
+  margin-left: 89%;
+}

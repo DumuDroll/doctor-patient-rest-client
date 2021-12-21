@@ -1,0 +1,17 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="username">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput formControlName="password">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Repeat password</mat-label>
+    <input type="password" matInput formControlName="repeatPassword">
+  </mat-form-field>
+  <div>
+    <button mat-button type="submit" [disabled]="this.registerForm.invalid">Sign-up</button>
+  </div>
+</form>
