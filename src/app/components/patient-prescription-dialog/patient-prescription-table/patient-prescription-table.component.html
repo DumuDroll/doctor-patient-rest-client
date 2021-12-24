@@ -2,7 +2,7 @@
   <div class="PatientSelector">
     <mat-label id="patient">Patient:</mat-label>
     <mat-form-field appearance="fill">
-      <mat-select #patientSelect formControlName="patient"
+      <mat-select formControlName="patient"
                   [compareWith]="compareObjects">
         <mat-option [value]=null>No selection</mat-option>
         <mat-option *ngFor="let patient of patients" [value]="patient">

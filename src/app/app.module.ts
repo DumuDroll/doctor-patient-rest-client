@@ -3,7 +3,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {FullInfoService} from './core/services/full-info.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -36,12 +36,13 @@ import { PatientPrescriptionTableComponent } from './components/patient-prescrip
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/login/login.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {authInterceptorProviders} from "./core/helper/auth.interceptor";
+import {AuthInterceptor, authInterceptorProviders} from "./core/helper/auth.interceptor";
 import { RegisterComponent } from './components/register/register.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import { BoardAdminDialogComponent } from './components/board-admin/board-admin-dialog/board-admin-dialog.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     BoardAdminComponent,
     BoardUserComponent,
     ProfileComponent,
+    BoardAdminDialogComponent,
   ],
     imports: [
         ReactiveFormsModule,
@@ -85,11 +87,8 @@ import {MatTabsModule} from "@angular/material/tabs";
         MatTabsModule
     ],
   providers: [
-    {provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS,
-      useValue: MY_FORMATS},
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     FullInfoService, DrugService, DoctorService, PatientService, DatePipe, authInterceptorProviders
   ],
   bootstrap: [AppComponent]

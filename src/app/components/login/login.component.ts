@@ -4,7 +4,6 @@ import {AuthenticationService} from "../../core/services/authentication.service"
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TokenStorageService} from "../../core/services/token-storage.service";
-import {UserService} from "../../core/services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -17,32 +16,38 @@ export class LoginComponent implements OnInit {
   successMessage?: string;
   invalidLogin = false;
   loginSuccess = false;
-  isLoggedIn = false;
+  message = '';
 
   constructor(private snackBar: MatSnackBar,
               private router: Router,
               private formBuilder: FormBuilder,
-              private userService: UserService,
               private tokenStorageService: TokenStorageService,
               public authenticationService: AuthenticationService) {
+    const navigation = this.router.getCurrentNavigation();
+    if(typeof navigation !='undefined' && navigation!=null){
+      const state = navigation.extras.state as {message: string};
+      if(typeof state !='undefined'){
+        this.message = state.message;
+      }
+    }
   }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(10)]],
+      password: [null, [Validators.required]],
     });
   }
 
   login() {
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe({
       next: (data) => {
-        this.tokenStorageService.saveToken(data.accessToken);
+        this.tokenStorageService.saveToken(data.jwt);
         this.tokenStorageService.saveUser(data);
         this.invalidLogin = false;
         this.loginSuccess = true;
         this.successMessage = 'Login Successful.';
-        this.userService.updateLoggedInInfo();
+        this.authenticationService.updateLoggedInInfo();
         this.router.navigateByUrl("/patients");
       },
       error: () => {

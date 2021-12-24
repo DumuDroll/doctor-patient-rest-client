@@ -37,7 +37,6 @@ export class PatientService {
   }
 
   public addDrugToPatient(patientId: number, patientDrugs: PatientPrescription[]) {
-    console.log("dataApi", patientDrugs);
     return this.http.patch<Patient>(`${baseUrl}${patientId}`, patientDrugs);
   }
 
@@ -50,7 +49,6 @@ export class PatientService {
   }
 
   public update(data: Patient): Observable<any> {
-    console.log("dataPatientsPut", data);
     return this.http.put(`${baseUrl}`, data);
   }
 

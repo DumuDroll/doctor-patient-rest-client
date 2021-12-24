@@ -2,21 +2,34 @@ import {Injectable} from "@angular/core";
 import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {TokenStorageService} from "../services/token-storage.service";
 import {Observable} from "rxjs";
+import {NavigationExtras, Router} from "@angular/router";
 
 const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private token: TokenStorageService) {
+
+  navigationExtras?: NavigationExtras;
+
+  constructor(private router: Router,
+              private tokenStorageService: TokenStorageService) {
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let authReq = req;
-    const token = this.token.getToken();
+  intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.tokenStorageService.getToken();
+    const user = this.tokenStorageService.getUser();
     if (token != null) {
-      authReq = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token)});
+      if (user.status == 'BLOCKED') {
+        this.navigationExtras = {state: {message: 'This account is blocked'}};
+        this.tokenStorageService.signOut();
+        this.router.navigate(['/'], this.navigationExtras);
+      }
+      httpRequest = httpRequest.clone({setHeaders:{ Authorization: `Bearer ${token}`}});
+    } else {
+      this.navigationExtras = {state: {message: 'Unauthorized access is forbidden'}};
+      this.router.navigate(['/'], this.navigationExtras);
     }
-    return next.handle(authReq);
+    return next.handle(httpRequest);
   }
 }
 

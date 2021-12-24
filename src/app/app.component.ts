@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TokenStorageService} from "./core/services/token-storage.service";
 import {Router} from "@angular/router";
 import {UserService} from "./core/services/user.service";
+import {AuthenticationService} from "./core/services/authentication.service";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   @Input() title = 'DoctorPatientRestClient';
 
   constructor(private tokenStorageService: TokenStorageService,
-              private userService: UserService,
+              private authenticationService: AuthenticationService,
               private router: Router) {
   }
 
@@ -31,7 +32,7 @@ export class AppComponent implements OnInit {
 
       this.username = user.username;
     }
-    this.userService.eventSubject.subscribe(value => {
+    this.authenticationService.eventSubject.subscribe(value => {
       this.isLoggedIn = value.isLoggedIn;
       this.roles = value.roles;
       this.showAdminBoard = value.showAdminBoard;

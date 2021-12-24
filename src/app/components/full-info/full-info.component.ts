@@ -46,7 +46,6 @@ export class FullInfoComponent implements OnInit {
   findAllFiltered(name?: string, page?: number, pageSize?: number) {
     this.fullInfoService.findAllFiltered(name,page,pageSize)
       .subscribe((data: any) => {
-        console.log("data", data);
         this.fullInfos = data['data'];
         this.totalItems = data['totalItems'];
         this.pageSize=data['pageSize'];

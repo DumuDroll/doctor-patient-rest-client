@@ -34,11 +34,11 @@ export class RegisterComponent implements OnInit {
     const username = this.registerForm.value.username;
     const password = this.registerForm.value.password;
 
-    this.authService.register(username, password).subscribe({
+    this.authService.firstLogin(username, password).subscribe({
         next: () => {
           this.isSuccessful = true;
           this.isSignUpFailed = false;
-          this.router.navigate(['/']).then();
+          this.router.navigate(['/']);
         },
         error: (err) => {
           this.errorMessage = err.error.message;

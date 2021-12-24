@@ -15,7 +15,7 @@
     </div>
   </div>
 </div>
-<div mat-tab-nav-bar>
+<div>
   <mat-sidenav-container>
     <mat-sidenav #sidenav>
       <mat-nav-list>
@@ -26,7 +26,6 @@
         <a mat-list-item [routerLink]="'/fullInfo'" *ngIf="isLoggedIn"> Full Info </a>
         <a mat-list-item [routerLink]="'/drugs'" *ngIf="isLoggedIn"> Drugs </a>
         <a mat-list-item [routerLink]="'/'" *ngIf="isLoggedIn==false"> Login page </a>
-        <a mat-list-item [routerLink]="'/register'" *ngIf="isLoggedIn==false"> Signup page </a>
         <a mat-list-item [routerLink]="'/admin'" class="nav-link" *ngIf="showAdminBoard">Admin Board</a>
         <a mat-list-item [routerLink]="'/profile'" class="nav-link" *ngIf="isLoggedIn">Profile</a>
         <a mat-list-item (click)="sidenav.toggle()" href="">Close</a>

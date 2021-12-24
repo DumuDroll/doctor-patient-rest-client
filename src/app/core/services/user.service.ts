@@ -1,47 +1,41 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable, BehaviorSubject} from "rxjs";
-import {TokenStorageService} from "./token-storage.service";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {User} from "../models/user";
 
-const API_URL = 'http://localhost:8080/api/test/';
-
-class LoginInfo {
-  isLoggedIn = false;
-  roles: string[] = [];
-  showAdminBoard = false;
-  username = "";
-}
+const USERS_URL = 'http://localhost:8080/api/users/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private eventSource = new BehaviorSubject<LoginInfo>(new LoginInfo());
-  eventSubject = this.eventSource.asObservable();
+  constructor(private http: HttpClient) {
+  }
 
-  constructor(private http: HttpClient,
-              private tokenStorageService: TokenStorageService) { }
-
-  updateLoggedInInfo() {
-    let loginInfo= new LoginInfo();
-    loginInfo.isLoggedIn  = !!this.tokenStorageService.getToken();
-    if (loginInfo.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      loginInfo.roles = user.roles;
-
-      loginInfo.showAdminBoard = loginInfo.roles.includes('ROLE_ADMIN');
-
-      loginInfo.username = user.username;
-      this.eventSource.next(loginInfo)
+  public findAllFiltered(name?: string, page?: number, size?: number): Observable<User[]> {
+    let params = new HttpParams();
+    if (typeof name !== 'undefined') {
+      params = params.append('name', name);
     }
+    if (typeof page !== 'undefined') {
+      params = params.append('page', page);
+    }
+    if (typeof size !== 'undefined') {
+      params = params.append('size', size);
+    }
+    return this.http.get<User[]>(`${USERS_URL}filtered/`, {params: params});
   }
 
-  getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'user', { responseType: 'text' });
+  public create(user: User) {
+    return this.http.post<User>(USERS_URL, user);
   }
 
-  getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'admin', { responseType: 'text' });
+  public update(user: User): Observable<User> {
+    return this.http.put<User>(USERS_URL, user);
+  }
+
+  public deleteById(id: number): Observable<User[]> {
+    return this.http.delete<User[]>(`${USERS_URL}${id}`)
   }
 }

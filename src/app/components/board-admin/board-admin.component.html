@@ -1,1 +1,8 @@
-<p>board-admin works!</p>
+<app-data-table-component
+  [tableData]="users"
+  [totalItems]="totalItems"
+  [pageSize]="pageSize"
+  [columnHeader]="columnHeader"
+  [dataService]="userService"
+  (showModificationDialog)="showUserDialog($event)"
+  *ngIf="users "></app-data-table-component>

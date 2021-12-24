@@ -49,7 +49,6 @@ export class DrugComponent implements OnInit {
   findAllFiltered(name?: string, page?: number, pageSize?: number) {
     this.drugService.findAllFiltered(name, page, pageSize)
       .subscribe((data: any) => {
-        console.log("data", data);
         this.drugs = data['data'];
         this.totalItems = data['totalItems'];
         this.pageSize = data['pageSize'];

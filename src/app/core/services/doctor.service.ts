@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Doctor} from "../models/doctor";
 
 const baseUrl = 'http://localhost:8080/api/doctors/';
-
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +30,6 @@ export class DoctorService {
     if (typeof size !== 'undefined') {
       params = params.append('size', size);
     }
-    console.log("params", params);
     return this.http.get<Doctor[]>(`${baseUrl}filtered/`, {params: params});
   }
 
@@ -41,7 +42,7 @@ export class DoctorService {
   }
 
   public update(data: Doctor): Observable<Doctor> {
-    return this.http.put<Doctor>(`${baseUrl}`, data);
+    return this.http.put<Doctor>(`${baseUrl}`, JSON.stringify(data),httpOptions );
   }
 
   public deleteById(id: number): Observable<Doctor[]> {

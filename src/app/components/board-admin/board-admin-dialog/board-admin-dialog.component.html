@@ -1,0 +1,33 @@
+<div mat-dialog-content>
+  <form [formGroup]="boardAdminForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username">
+    </mat-form-field>
+    <div *ngIf="data.roles">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose status</mat-label>
+      <mat-select [value]="data.status" [compareWith]="compareObjects" (selectionChange)="onStatusChange($event.value)">
+        <mat-option *ngFor="let status of data.statuses" [value]="status">
+          {{status}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Choose roles</mat-label>
+      <mat-select #roleSelect multiple [compareWith]="compareObjects" [(value)]="data.roles"
+                  (selectionChange)="onRoleChange($event.value)">
+        <mat-option (click)="toggleAllSelection()" [value]="null">Select all</mat-option>
+        <mat-option *ngFor="let role of data.allRoles" [value]="role">
+          {{role}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+  </form>
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="true" (click)="onCancelClick()">Cancel</button>
+      <button mat-button type="submit" [disabled]="this.boardAdminForm.invalid" (click)="submit()" [mat-dialog-close]="data">Save</button>
+    </div>
+
+</div>

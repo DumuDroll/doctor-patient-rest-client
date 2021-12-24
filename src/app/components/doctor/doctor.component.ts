@@ -31,7 +31,6 @@ export class DoctorComponent implements OnInit {
   }
 
   showDoctorDialog(element: any): void {
-    console.log("tst", element);
     const dialogRef = this.dialog.open(DoctorDialog, {
       width: '250px',
       data: {id: element?.element.id,
@@ -54,7 +53,6 @@ export class DoctorComponent implements OnInit {
   findAllFiltered(name?: string, page?: number, pageSize?: number) {
     this.doctorService.findAllFiltered(name, page, pageSize)
       .subscribe((data: any) => {
-        console.log("data", data);
         this.doctors = data['data'];
         this.totalItems = data['totalItems'];
         this.pageSize=data['pageSize'];
