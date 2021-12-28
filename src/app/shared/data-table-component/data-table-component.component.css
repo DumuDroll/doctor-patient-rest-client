@@ -15,5 +15,9 @@ mat-form-field#filterMain{
 }
 button#buttonAdd{
   margin-top: 1.5%;
-  margin-left: 46.45%;
+  margin-left: 12.45%;
+}
+button#buttonActiveTab{
+  margin-top: 1.5%;
+  margin-left: 33.45%;
 }

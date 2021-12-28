@@ -4,6 +4,7 @@ import {
 import {MatTableDataSource} from "@angular/material/table";
 import {FullInfoService} from "../../core/services/full-info.service";
 import {MatPaginator} from "@angular/material/paginator";
+import {UserService} from "../../core/services/user.service";
 
 @Component({
   selector: 'app-data-table-component',
@@ -31,6 +32,8 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
 
   dataSource: any;
 
+  blocked?: boolean;
+
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource = new MatTableDataSource(this.tableData);
@@ -44,12 +47,19 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
     return (this.dataService instanceof FullInfoService);
   }
 
-  applyFilter(filterValue: any) {
+  checkIfAdminBoard() {
+    return (this.dataService instanceof UserService);
+  }
+
+  applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
   }
 
-  applyApiFilter(filterValue: string, page?: number) {
-    this.dataService.findAllFiltered(filterValue, page, this.paginator.pageSize).subscribe((data: any) => {
+  applyApiFilter(filterValue: string, page?: number, blocked?: boolean) {
+    if (typeof this.blocked !== 'undefined') {
+      blocked = this.blocked;
+    }
+    this.dataService.findAllFiltered(filterValue, page, this.paginator.pageSize, blocked).subscribe((data: any) => {
       this.dataSource = new MatTableDataSource(data['data']);
       this.paginator.pageIndex = data['currentPage'];
       this.totalItems = data['totalItems'];
@@ -57,8 +67,8 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
     });
   }
 
-  changePage(filterValue: any, page: any) {
-    this.applyApiFilter(filterValue, page);
+  changePage(filterValue: string, page: number) {
+    this.applyApiFilter(filterValue, page, this.blocked);
   }
 
   emitToModificationDialog(element: any, filterValue: string, page: number, pageSize: number) {
@@ -66,6 +76,19 @@ export class DataTableComponentComponent implements OnInit, OnChanges {
   }
 
   delete(element: any, filterValue: string, page: number) {
-    this.dataService.deleteById(element.id).subscribe(() => this.applyApiFilter(filterValue, page));
+    this.dataService.deleteById(element.id).subscribe(() => this.applyApiFilter(filterValue, page, this.blocked));
+  }
+
+  block(element: any, filterValue: string, page: number) {
+    element.status = "BLOCKED";
+    this.dataService.update(element).subscribe(() => this.applyApiFilter(filterValue, page));
+  }
+
+  toggleActive(filterValue: string) {
+    if (typeof this.blocked == 'undefined') {
+      this.blocked = true;
+    }
+    this.blocked = !this.blocked;
+    this.applyApiFilter(filterValue, 0, this.blocked);
   }
 }

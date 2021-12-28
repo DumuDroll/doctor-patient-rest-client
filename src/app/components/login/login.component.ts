@@ -50,10 +50,10 @@ export class LoginComponent implements OnInit {
         this.authenticationService.updateLoggedInInfo();
         this.router.navigateByUrl("/patients");
       },
-      error: () => {
+      error: (err) => {
         this.invalidLogin = true;
         this.loginSuccess = false;
-        this.openSnackBar("Wrong username or password!", "");
+        this.openSnackBar("Error: " + err.error.detail, "Got it");
       }
     });
   }

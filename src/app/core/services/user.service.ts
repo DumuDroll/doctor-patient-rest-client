@@ -13,7 +13,7 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  public findAllFiltered(name?: string, page?: number, size?: number): Observable<User[]> {
+  public findAllFiltered(name?: string, page?: number, size?: number, blocked?: boolean): Observable<User[]> {
     let params = new HttpParams();
     if (typeof name !== 'undefined') {
       params = params.append('name', name);
@@ -23,6 +23,9 @@ export class UserService {
     }
     if (typeof size !== 'undefined') {
       params = params.append('size', size);
+    }
+    if (typeof blocked !== 'undefined'){
+      params = params.append('blocked', blocked);
     }
     return this.http.get<User[]>(`${USERS_URL}filtered/`, {params: params});
   }

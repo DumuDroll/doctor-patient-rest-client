@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {TokenStorageService} from "./token-storage.service";
 import {User} from "../models/user";
 
@@ -22,7 +22,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private eventSource = new BehaviorSubject<LoginInfo>(new LoginInfo());
+  private eventSource = new Subject<LoginInfo>();
   eventSubject = this.eventSource.asObservable();
   public username?: string;
   public password?: string;

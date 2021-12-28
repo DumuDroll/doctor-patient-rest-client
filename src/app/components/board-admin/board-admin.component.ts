@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {Doctor} from "../../core/models/doctor";
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {DoctorService} from "../../core/services/doctor.service";
-import {DoctorDialog} from "../doctor/add-new-dialog/doctor-dialog.component";
 import {User} from "../../core/models/user";
 import {UserService} from "../../core/services/user.service";
 import {BoardAdminDialogComponent} from "./board-admin-dialog/board-admin-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-board-admin',
@@ -29,6 +27,7 @@ export class BoardAdminComponent implements OnInit {
   }
 
   constructor(public dialog: MatDialog,
+              private snackBar: MatSnackBar,
               public userService: UserService) {
   }
 
@@ -39,18 +38,25 @@ export class BoardAdminComponent implements OnInit {
   showUserDialog(element: any): void {
     const dialogRef = this.dialog.open(BoardAdminDialogComponent, {
       width: '250px',
-      data: {id: element?.element.id,
+      data: {
+        id: element?.element.id,
         username: element?.element.username,
         status: element?.element.status,
         statuses: ['FIRST_IN', 'ACTIVE', 'BLOCKED'],
         roles: element?.element.roles,
-        allRoles: ['ROLE_USER', 'ROLE_ADMIN']},
+        allRoles: ['ROLE_USER', 'ROLE_ADMIN']
+      },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         if (element == null) {
           this.userService.create(result)
-            .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
+            .subscribe({
+              next: () => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize),
+              error: err => {
+                this.openSnackBar("Error: " + err.error.detail, "Close");
+              }
+            });
         } else {
           this.userService.update(result)
             .subscribe(() => this.findAllFiltered(element?.filterValue, element?.page, element?.pageSize));
@@ -64,9 +70,17 @@ export class BoardAdminComponent implements OnInit {
       .subscribe((data: any) => {
         this.users = data['data'];
         this.totalItems = data['totalItems'];
-        this.pageSize=data['pageSize'];
+        this.pageSize = data['pageSize'];
       });
   }
 
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: ['red-snackbar'],
+    });
+  }
 
 }
