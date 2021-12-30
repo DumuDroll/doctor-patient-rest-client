@@ -40,6 +40,7 @@ export class BoardAdminComponent implements OnInit {
       width: '250px',
       data: {
         id: element?.element.id,
+        uuid: element?.element.uuid,
         username: element?.element.username,
         status: element?.element.status,
         statuses: ['FIRST_IN', 'ACTIVE', 'BLOCKED'],

@@ -7,6 +7,7 @@ import {MatOption} from "@angular/material/core";
 
 class DialogData {
   id?: number;
+  uuid?: string;
   username?: string;
   roles?: string[];
   allRoles?: string[];

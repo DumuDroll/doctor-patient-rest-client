@@ -33,10 +33,6 @@ export class DoctorService {
     return this.http.get<Doctor[]>(`${baseUrl}filtered/`, {params: params});
   }
 
-  public findById(id: number): Observable<Doctor> {
-    return this.http.get(`${baseUrl}${id}`);
-  }
-
   public create(doctor: Doctor) {
     return this.http.post<Doctor>(baseUrl, doctor);
   }

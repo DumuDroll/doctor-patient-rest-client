@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 class DialogData {
   id?: number;
+  uuid?: string;
   name?: string;
 }
 

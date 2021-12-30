@@ -30,6 +30,7 @@ export class DrugComponent implements OnInit {
       width: '250px',
       data: {
         id: element?.element.id,
+        uuid: element?.element.uuid,
         name: element?.element.name
       }
     });

@@ -11,6 +11,7 @@ import {PatientPrescription} from "../../../core/models/patientPrescription";
 
 class DialogData {
   id?: number;
+  uuid?: string;
   firstName?: string;
   lastName?: string;
   fullInfo: FullInfo = new FullInfo();

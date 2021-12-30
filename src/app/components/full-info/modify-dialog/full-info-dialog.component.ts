@@ -3,10 +3,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FullInfo} from "../../../core/models/full-info";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DateService} from "../../../core/services/date/date.service";
-import * as moment from 'moment';
 
 class DialogData {
   id?: number;
+  uuid?: string;
   email?: string;
   birthDate?: Date;
   phoneNumber?: string;

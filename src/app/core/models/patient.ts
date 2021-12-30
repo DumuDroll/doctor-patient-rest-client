@@ -5,6 +5,7 @@ import {PatientPrescription} from "./patientPrescription";
 export class Patient {
 
   id?: number;
+  uuid?: string;
   firstName?: string;
   lastName?: string;
   fullInfo?: FullInfo;

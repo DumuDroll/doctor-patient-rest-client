@@ -51,28 +51,19 @@ export class PatientComponent implements OnInit {
     if (fullInfo == null) {
       fullInfo = new FullInfo();
     }
-    let drugsFromDB: PatientPrescription[] = [];
-    this.drugs?.forEach(drug => {
-      let drugToPrescription = new PatientPrescription(element.id, drug.id, drug.name, new Date, new Date);
-      element.element.drugs.forEach((prescription: PatientPrescription) => {
-        if (drugToPrescription.drugId === prescription.drugId) {
-          drugToPrescription.prescriptionStartDate = prescription.prescriptionStartDate;
-          drugToPrescription.prescriptionEndDate = prescription.prescriptionEndDate;
-        }
-      })
-      drugsFromDB.push(drugToPrescription);
-    })
+
     const dialogRef = this.dialog.open(PatientDialog, {
       width: '300px',
       data: {
         id: element?.element.id,
+        uuid: element?.element.uuid,
         firstName: element?.element.firstName,
         lastName: element?.element.lastName,
         fullInfo: fullInfo,
         doctor: element?.element.doctor,
         drugs: element?.element.drugs,
         doctors: this.doctors,
-        allDrugs: drugsFromDB
+        allDrugs: this.populateDrugs(element)
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -96,6 +87,21 @@ export class PatientComponent implements OnInit {
         }
       }
     });
+  }
+
+  populateDrugs(element?: any){
+    let drugsFromDB: PatientPrescription[] = [];
+    this.drugs?.forEach(drug => {
+      let drugToPrescription = new PatientPrescription(element.id, drug.id, drug.name, new Date, new Date);
+      element.element.drugs.forEach((prescription: PatientPrescription) => {
+        if (drugToPrescription.drugId === prescription.drugId) {
+          drugToPrescription.prescriptionStartDate = prescription.prescriptionStartDate;
+          drugToPrescription.prescriptionEndDate = prescription.prescriptionEndDate;
+        }
+      })
+      drugsFromDB.push(drugToPrescription);
+    })
+    return drugsFromDB;
   }
 
   findAllFiltered(name?: string, page?: number, pageSize?: number) {

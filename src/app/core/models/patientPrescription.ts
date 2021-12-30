@@ -4,6 +4,8 @@ export class PatientPrescription {
 
   drugId: number;
 
+  uuid?: string;
+
   drugName?: string;
 
   prescriptionStartDate: Date;

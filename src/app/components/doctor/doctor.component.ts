@@ -34,6 +34,7 @@ export class DoctorComponent implements OnInit {
     const dialogRef = this.dialog.open(DoctorDialog, {
       width: '250px',
       data: {id: element?.element.id,
+        uuid: element?.element.uuid,
         name: element?.element.name,
         experience: element?.element.experience}
     });

@@ -31,6 +31,7 @@ export class FullInfoComponent implements OnInit {
     const dialogRef = this.dialog.open(FullInfoDialog, {
       width: '300px',
       data: {id: element?.element.id,
+        uuid: element?.element.uuid,
         email: element?.element.email,
         birthDate: element?.element.birthDate,
         phoneNumber: element?.element.phoneNumber}
