@@ -4,9 +4,8 @@ import {Observable, Subject} from "rxjs";
 import {TokenStorageService} from "./token-storage.service";
 import {User} from "../models/user";
 
-const AUTH_API = 'http://localhost:8080/api/auth/';
-
 class LoginInfo {
+  id=0;
   isLoggedIn = false;
   roles: string[] = [];
   showAdminBoard = false;
@@ -22,6 +21,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthenticationService {
+
+  private authApiUrl = 'http://localhost:8080/api/auth/';
+
   private eventSource = new Subject<LoginInfo>();
   eventSubject = this.eventSource.asObservable();
   public username?: string;
@@ -32,21 +34,21 @@ export class AuthenticationService {
   }
 
   firstLogin(username: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'setPassword', {
+    return this.http.post(this.authApiUrl + 'setPassword', {
       username,
       password
     }, httpOptions);
   }
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'signin', {
+    return this.http.post(this.authApiUrl + 'signin', {
       username,
       password
     }, httpOptions);
   }
 
   register(username: string, password?: string): Observable<any> {
-    return this.http.post<User>(AUTH_API + 'signup', {
+    return this.http.post<User>(this.authApiUrl + 'signup', {
       username,
       password
     }, httpOptions);
@@ -58,7 +60,7 @@ export class AuthenticationService {
     if (loginInfo.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       loginInfo.roles = user.roles;
-
+      loginInfo.id = user.id;
       loginInfo.showAdminBoard = loginInfo.roles.includes('ROLE_ADMIN');
 
       loginInfo.username = user.username;

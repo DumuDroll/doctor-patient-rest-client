@@ -1,44 +1,56 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpParams, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../models/user";
-
-const USERS_URL = 'http://localhost:8080/api/users/';
+import {HttpParamsUtil} from "../../shared/utils/http-params-util";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private baseUrl = 'http://localhost:8080/api/users/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private paramsUtil: HttpParamsUtil) {
   }
 
   public findAllFiltered(name?: string, page?: number, size?: number, blocked?: boolean): Observable<User[]> {
-    let params = new HttpParams();
-    if (typeof name !== 'undefined') {
-      params = params.append('name', name);
-    }
-    if (typeof page !== 'undefined') {
-      params = params.append('page', page);
-    }
-    if (typeof size !== 'undefined') {
-      params = params.append('size', size);
-    }
-    if (typeof blocked !== 'undefined'){
+    let params = this.paramsUtil.extracted(name, page, size);
+    if (typeof blocked !== 'undefined') {
       params = params.append('blocked', blocked);
     }
-    return this.http.get<User[]>(`${USERS_URL}filtered/`, {params: params});
+    return this.http.get<User[]>(`${this.baseUrl}filtered/`, {params: params});
   }
 
   public create(user: User) {
-    return this.http.post<User>(USERS_URL, user);
+    return this.http.post<User>(this.baseUrl, user);
   }
 
   public update(user: User): Observable<User> {
-    return this.http.put<User>(USERS_URL, user);
+    return this.http.put<User>(this.baseUrl, user);
   }
 
   public deleteById(id: number): Observable<User[]> {
-    return this.http.delete<User[]>(`${USERS_URL}${id}`)
+    return this.http.delete<User[]>(`${this.baseUrl}${id}`)
+  }
+
+  upload(file: File, email: string): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+    formData.append('email', email);
+
+    const req = new HttpRequest('POST', `${this.baseUrl}icon`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this.http.request(req);
+  }
+
+  getFile(id: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append("id", id);
+
+    return this.http.get(`${this.baseUrl}icon`, {params: params});
   }
 }

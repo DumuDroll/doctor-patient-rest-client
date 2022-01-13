@@ -6,6 +6,9 @@
           <button mat-icon-button color="accent">
             <mat-icon class="icon-menu" (click)="sidenav.toggle()">menu</mat-icon>
           </button>
+          <img mat-card-sm-image
+               alt="Here can be your profile pic"
+               [src]="img" *ngIf="isLoggedIn && img!=null"/>
           <button (click)="logout()" class="icon-logout" mat-icon-button color="accent" *ngIf="isLoggedIn">
             Log out<mat-icon>exit_to_app</mat-icon>
           </button>

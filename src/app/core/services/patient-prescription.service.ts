@@ -3,12 +3,11 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {PatientPrescription} from "../models/patientPrescription";
 
-const baseUrl = 'http://localhost:8080/api/patientPrescriptions/';
-
 @Injectable({
   providedIn: 'root'
 })
 export class PatientPrescriptionService {
+  private baseUrl = 'http://localhost:8080/api/patientPrescriptions/';
 
   constructor(private http: HttpClient) {
   }
@@ -30,6 +29,6 @@ export class PatientPrescriptionService {
     if (typeof patientId !== 'undefined') {
       params = params.append('patientId', patientId);
     }
-    return this.http.get<PatientPrescription[]>(`${baseUrl}filtered/`, {params});
+    return this.http.get<PatientPrescription[]>(`${this.baseUrl}filtered/`, {params});
   }
 }

@@ -4,18 +4,17 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Patient} from "../models/patient";
 import {PatientPrescription} from "../models/patientPrescription";
 
-const baseUrl = 'http://localhost:8080/api/patients/';
-
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
+  private baseUrl = 'http://localhost:8080/api/patients/';
 
   constructor(private http: HttpClient) {
   }
 
   public findAll(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(baseUrl);
+    return this.http.get<Patient[]>(this.baseUrl);
   }
 
   public findAllFiltered(fNameLName?: string, page?: number, size?: number): Observable<Patient[]> {
@@ -29,31 +28,31 @@ export class PatientService {
     if (typeof size !== 'undefined') {
       params = params.append('size', size);
     }
-    return this.http.get<Patient[]>(`${baseUrl}filtered/`, {params});
+    return this.http.get<Patient[]>(`${this.baseUrl}filtered/`, {params});
   }
 
   public addDoctorToPatient(doctorId: any, patient: Patient) {
-    return this.http.patch<Patient>(`${baseUrl}${doctorId}`, patient)
+    return this.http.patch<Patient>(`${this.baseUrl}${doctorId}`, patient)
   }
 
   public addDrugToPatient(patientId: number, patientDrugs: PatientPrescription[]) {
-    return this.http.patch<Patient>(`${baseUrl}${patientId}`, patientDrugs);
+    return this.http.patch<Patient>(`${this.baseUrl}${patientId}`, patientDrugs);
   }
 
   public findById(id: any): Observable<Patient> {
-    return this.http.get(`${baseUrl}${id}`);
+    return this.http.get(`${this.baseUrl}${id}`);
   }
 
   public create(patient: Patient) {
-    return this.http.post<Patient>(baseUrl, patient);
+    return this.http.post<Patient>(this.baseUrl, patient);
   }
 
   public update(data: Patient): Observable<any> {
-    return this.http.put(`${baseUrl}`, data);
+    return this.http.put(`${this.baseUrl}`, data);
   }
 
   public deleteById(id: any): Observable<Patient[]> {
-    return this.http.delete<Patient[]>(`${baseUrl}${id}`)
+    return this.http.delete<Patient[]>(`${this.baseUrl}${id}`)
   }
 
 }

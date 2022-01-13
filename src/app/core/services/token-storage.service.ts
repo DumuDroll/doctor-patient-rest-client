@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 
-const TOKEN_KEY = 'auth-token';
-const USER_KEY = 'auth-user';
-
 @Injectable({
   providedIn: 'root'
 })
-export class TokenStorageService{
+export class TokenStorageService {
+  private authToken = 'auth-token';
+  private authUser = 'auth-user';
 
   constructor() {
     //this is intentional
@@ -17,21 +16,21 @@ export class TokenStorageService{
   }
 
   public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+    window.sessionStorage.removeItem(this.authToken);
+    window.sessionStorage.setItem(this.authToken, token);
   }
 
   public getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+    return window.sessionStorage.getItem(this.authToken);
   }
 
   public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.sessionStorage.removeItem(this.authUser);
+    window.sessionStorage.setItem(this.authUser, JSON.stringify(user));
   }
 
   public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    const user = window.sessionStorage.getItem(this.authUser);
     if (user) {
       return JSON.parse(user);
     }

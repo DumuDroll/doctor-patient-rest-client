@@ -39,10 +39,14 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {authInterceptorProviders} from "./core/helper/auth.interceptor";
 import {RegisterComponent} from './components/register/register.component';
 import {BoardAdminComponent} from './components/board-admin/board-admin.component';
-import {BoardUserComponent} from './components/board-user/board-user.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {BoardAdminDialogComponent} from './components/board-admin/board-admin-dialog/board-admin-dialog.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatCardModule} from "@angular/material/card";
+import {HttpParamsUtil} from "./shared/utils/http-params-util";
+import {PatientDiagnosisComponent} from './components/patient/patient-diagnosis/patient-diagnosis.component';
 
 @NgModule({
   declarations: [
@@ -62,9 +66,9 @@ import {BoardAdminDialogComponent} from './components/board-admin/board-admin-di
     LoginComponent,
     RegisterComponent,
     BoardAdminComponent,
-    BoardUserComponent,
     ProfileComponent,
     BoardAdminDialogComponent,
+    PatientDiagnosisComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -84,12 +88,15 @@ import {BoardAdminDialogComponent} from './components/board-admin/board-admin-di
     MatDatepickerModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatTabsModule
+    MatTabsModule,
+    MatToolbarModule,
+    MatProgressBarModule,
+    MatCardModule
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-    FullInfoService, DrugService, DoctorService, PatientService, DatePipe, authInterceptorProviders
+    FullInfoService, DrugService, DoctorService, PatientService, HttpParamsUtil, DatePipe, authInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

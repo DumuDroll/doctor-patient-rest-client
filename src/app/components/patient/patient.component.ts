@@ -89,17 +89,42 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  populateDrugs(element?: any){
+  showPatientDiagnosisDialog(element?: any): void {
+
+    const dialogRef = this.dialog.open(PatientDialog, {
+      width: '300px',
+      data: {
+        id: element?.element.id
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        if (element == null) {
+
+        }
+      }
+    });
+  }
+
+
+  populateDrugs(element?: any) {
     let drugsFromDB: PatientPrescription[] = [];
     this.drugs?.forEach(drug => {
-      let drugToPrescription = new PatientPrescription(element.id, drug.id, drug.name, new Date, new Date);
-      element.element.drugs.forEach((prescription: PatientPrescription) => {
-        if (drugToPrescription.drugId === prescription.drugId) {
-          drugToPrescription.prescriptionStartDate = prescription.prescriptionStartDate;
-          drugToPrescription.prescriptionEndDate = prescription.prescriptionEndDate;
-        }
-      })
+      let drugToPrescription: PatientPrescription;
+      if (typeof element !== 'undefined') {
+        drugToPrescription = new PatientPrescription(element.id, drug.id, drug.name, new Date, new Date);
+        element.element.drugs.forEach((prescription: PatientPrescription) => {
+          if (drugToPrescription.drugId === prescription.drugId) {
+            drugToPrescription.prescriptionStartDate = prescription.prescriptionStartDate;
+            drugToPrescription.prescriptionEndDate = prescription.prescriptionEndDate;
+          }
+        })
+      } else {
+        drugToPrescription = new PatientPrescription(0, drug.id, drug.name, new Date, new Date);
+      }
+
       drugsFromDB.push(drugToPrescription);
+
     })
     return drugsFromDB;
   }
