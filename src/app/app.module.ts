@@ -46,7 +46,6 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatCardModule} from "@angular/material/card";
 import {HttpParamsUtil} from "./shared/utils/http-params-util";
-import {PatientDiagnosisComponent} from './components/patient/patient-diagnosis/patient-diagnosis.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +67,6 @@ import {PatientDiagnosisComponent} from './components/patient/patient-diagnosis/
     BoardAdminComponent,
     ProfileComponent,
     BoardAdminDialogComponent,
-    PatientDiagnosisComponent,
   ],
   imports: [
     ReactiveFormsModule,

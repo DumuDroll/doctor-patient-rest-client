@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpParams, HttpRequest} from "@angular/common/http";
 import {Patient} from "../models/patient";
 import {PatientPrescription} from "../models/patientPrescription";
 
@@ -49,6 +49,27 @@ export class PatientService {
 
   public update(data: Patient): Observable<any> {
     return this.http.put(`${this.baseUrl}`, data);
+  }
+
+  upload(file: File, id: string): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+    formData.append('id', id);
+
+    const req = new HttpRequest('POST', `${this.baseUrl}diagnosis`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this.http.request(req);
+  }
+
+  getFile(id: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append("id", id);
+
+    return this.http.get(`${this.baseUrl}diagnosis`, {params: params});
   }
 
   public deleteById(id: any): Observable<Patient[]> {

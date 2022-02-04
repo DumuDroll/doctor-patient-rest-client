@@ -58,7 +58,6 @@ export class ProfileComponent implements OnInit {
           }
         }),
         error: ((err: any) => {
-          console.log(err);
           this.progress = 0;
 
           if (err.error && err.error.message) {
@@ -71,13 +70,6 @@ export class ProfileComponent implements OnInit {
         })
       });
     }
-  }
-
-  showIcon(): void {
-    this.userService.getFile(11).subscribe(data =>{
-      let objectURL = 'data:image/jpg;base64,' + data.icon;
-      this.img = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    });
   }
 
 }

@@ -1,1 +1,6 @@
 ::ng-deep .mat-option:first-child .mat-pseudo-checkbox{ display: none; }
+
+.input-fileSelect {
+  font-size: 14px;
+  line-height: 18px;
+}
