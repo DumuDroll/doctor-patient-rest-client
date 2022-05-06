@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../core/services/authentication.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TokenStorageService} from "../../core/services/token-storage.service";
+import {WebsocketService} from "../../core/services/websocket.service";
 
 @Component({
   selector: 'app-login',
@@ -20,14 +21,19 @@ export class LoginComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar,
               private router: Router,
+              private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               private tokenStorageService: TokenStorageService,
               public authenticationService: AuthenticationService) {
     const navigation = this.router.getCurrentNavigation();
-    if(typeof navigation !='undefined' && navigation!=null){
-      const state = navigation.extras.state as {message: string};
-      if(typeof state !='undefined'){
+    let flag = this.route.snapshot.paramMap.get('passSet');
+    if (typeof navigation != 'undefined' && navigation != null) {
+      const state = navigation.extras.state as { message: string };
+      if (typeof state != 'undefined') {
         this.message = state.message;
+        if (typeof flag != 'undefined' && flag != null) {
+          this.message = flag;
+        }
       }
     }
   }

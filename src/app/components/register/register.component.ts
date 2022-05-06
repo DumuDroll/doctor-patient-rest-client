@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../core/services/authentication.service";
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
         next: () => {
           this.isSuccessful = true;
           this.isSignUpFailed = false;
-          this.router.navigate(['/']);
+          this.router.navigate(['/', {passSet: true}]);
         },
         error: (err) => {
           this.errorMessage = err.error.message;

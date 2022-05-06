@@ -31,6 +31,7 @@
         <a mat-list-item [routerLink]="'/'" *ngIf="isLoggedIn==false"> Login page </a>
         <a mat-list-item [routerLink]="'/admin'" class="nav-link" *ngIf="showAdminBoard">Admin Board</a>
         <a mat-list-item [routerLink]="'/profile'" class="nav-link" *ngIf="isLoggedIn">Profile</a>
+        <a mat-list-item [routerLink]="'/websocket'" class="nav-link" *ngIf="isLoggedIn">Websocket</a>
         <a mat-list-item (click)="sidenav.toggle()" href="">Close</a>
 
       </mat-nav-list>

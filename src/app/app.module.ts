@@ -33,7 +33,6 @@ import {DatePipe} from '@angular/common'
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {PatientPrescriptionComponent} from './components/patient-prescription-dialog/patient-prescription.component';
 import {PatientPrescriptionTableComponent} from './components/patient-prescription-dialog/patient-prescription-table/patient-prescription-table.component';
-import {UserComponent} from './components/user/user.component';
 import {LoginComponent} from './components/login/login.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {authInterceptorProviders} from "./core/helper/auth.interceptor";
@@ -46,6 +45,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatCardModule} from "@angular/material/card";
 import {HttpParamsUtil} from "./shared/utils/http-params-util";
+import {WebsocketComponent} from "./components/websocket/websocket.component";
 
 @NgModule({
   declarations: [
@@ -54,6 +54,7 @@ import {HttpParamsUtil} from "./shared/utils/http-params-util";
     DoctorComponent,
     PatientComponent,
     FullInfoComponent,
+    WebsocketComponent,
     FullInfoDialog,
     PatientDialog,
     DoctorDialog,
@@ -61,7 +62,6 @@ import {HttpParamsUtil} from "./shared/utils/http-params-util";
     DataTableComponentComponent,
     PatientPrescriptionComponent,
     PatientPrescriptionTableComponent,
-    UserComponent,
     LoginComponent,
     RegisterComponent,
     BoardAdminComponent,
